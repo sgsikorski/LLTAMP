@@ -32,7 +32,7 @@ def train():
         controller.reset(scene=environment)
 
         # Initial state
-        state = controller.last_event
+        state = util.State(controller.last_event)
 
         # Run this environment actions for 100 seconds
         startTime = time.perf_counter()
@@ -50,7 +50,7 @@ def train():
                 newTransition = ll.A_correct(state, BufferStream)
                 M.append(newTransition)
 
-            newState = event.metadata
+            newState = util.State(event.metadata)
             state = newState
         
         # Lifelong Learning Componenet

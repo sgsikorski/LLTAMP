@@ -1,9 +1,14 @@
 import util
+import torch
+import tensorflow as tf
 
 # Sampling based policy
 def InitialPolicy(state):
-    action = {}
-    action["Type"] = util.ACTION_TYPES[0]
+    action = util.Action()
+
+    # Check if there's a grabable object in the scene
+    # Allow sampling of actions on the grabable object
+    # If multiple grabable objects, sample from the closest one
     return action
 
 # Learnable policy

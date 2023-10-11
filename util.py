@@ -16,6 +16,14 @@ class Transition():
             self.action = action
     # Maybe add some more useful methods
 
+class State():
+    def __init__(self, eventMetadata = None):
+        self.envMD = eventMetadata
+
+class Action():
+    def __init__(self, actionType = None):
+        self.actionType = actionType
+
 # Possible goal objects
 TARGET_OBJECT_TYPES = [
     "AlarmClock,"
