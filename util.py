@@ -1,6 +1,7 @@
 """
 Utility file to help with global constants and some useful abstractions and methods
 """
+import json
 
 class Transition():
     def __init__(self, state=None, action=None):
@@ -19,10 +20,22 @@ class Transition():
 class State():
     def __init__(self, eventMetadata = None):
         self.envMD = eventMetadata
+        self.visibleObjects = [obj for obj in eventMetadata['objects'] if obj['visible']]
+    
+    def __repr__(self) -> str:
+        return f"""\u007b
+    \"Visible Objects\": {json.dumps(self.visibleObjects, sort_keys=True, indent=4)},
+    \"Agent\": \u007b 
+        \"x\": {self.envMD['agent']['position']['x']},
+        \"y\": {self.envMD['agent']['position']['y']},
+        \"z\": {self.envMD['agent']['position']['z']}
+    \u007d
+\u007d"""
 
 class Action():
-    def __init__(self, actionType = None):
+    def __init__(self, actionType = None, objectOn = None):
         self.actionType = actionType
+        self.objectOn = objectOn
 
 # Possible goal objects
 TARGET_OBJECT_TYPES = [
@@ -81,11 +94,14 @@ BACKGROUND_OBJECT_TYPES = [
     "Watch"
 ]
 
-ACTION_TYPES = [
+MOVEMENT_ACTION_TYPES = [
     "MoveAhead",
     "MoveBack",
     "MoveLeft",
-    "MoveRight",
+    "MoveRight"
+]
+
+ACTION_TYPES = [
     "PickupObject",
     "PutObject",
     "DropHandObject",

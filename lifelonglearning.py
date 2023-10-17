@@ -1,11 +1,14 @@
 import util
 import torch
-import tensorflow as tf
 
 # Sampling based policy
 def InitialPolicy(state):
     action = util.Action()
-
+    potentialActions = util.MOVEMENT_ACTION_TYPES
+    if len(state.visibleObjects) != 0:
+        for obj in state.visibleObjects:
+            potentialActions.append()
+        potentialActions.concatentate(util.ACTION_TYPES)
     # Check if there's a grabable object in the scene
     # Allow sampling of actions on the grabable object
     # If multiple grabable objects, sample from the closest one
@@ -13,6 +16,10 @@ def InitialPolicy(state):
 
 # Learnable policy
 def ThetaPolicy():
+
+    return
+
+def similar():
 
     return
 
