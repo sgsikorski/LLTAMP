@@ -1,13 +1,14 @@
-import util
+from util import utilConstants, Action, Node
 import torch
+import random
 
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
 
 # Sampling based policy
 def InitialPolicy(state):
-    action = util.Action()
-    potentialActions = util.getPotentialActions(state)
+    action = Action()
+    potentialActions = utilConstants.getPotentialActions(state)
     # Check if there's a grabable object in the scene
     # Allow sampling of actions on the grabable object
     # If multiple grabable objects, sample from the closest one

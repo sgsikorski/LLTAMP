@@ -1,7 +1,7 @@
 from ai2thor.controller import Controller
 import time
 import torch
-import util
+from util import State, Action, Transition
 import lifelonglearning as ll
 from tqdm import tqdm
 
@@ -19,7 +19,7 @@ def train(controller, environments):
         # event = controller.step("MoveAhead")
         
         # Initial state
-        state = util.State(controller.last_event.metadata)
+        state = State(controller.last_event.metadata)
         M.append(state)
 
         # Run this environment actions for 100 seconds
@@ -27,7 +27,7 @@ def train(controller, environments):
         while(time.perf_counter() - startTime < 100):
             # Determine action
             action = ll.InitialPolicy(state)
-            transition = util.Transition(state, action)
+            transition = Transition(state, action)
 
             # Execute action
             event = controller.step(action.actionType)
@@ -42,7 +42,7 @@ def train(controller, environments):
                 newTransition = ll.A_correct(state, BufferStream)
                 M.append(newTransition)
 
-            newState = util.State(event.metadata)
+            newState = State(event.metadata)
             state = newState
             M.append(state)
         

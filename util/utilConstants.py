@@ -1,55 +1,6 @@
 """
 Utility file to help with global constants and some useful abstractions and methods
 """
-import json
-import numpy as np
-
-class Transition():
-    def __init__(self, state=None, action=None):
-        if state is None or action is None:
-            raise TypeError("State and action must be defined types for a transition")
-        self.state = state
-        self.action = action
-
-    def updateTransition(self, state = None, action = None):
-        if state is not None:
-            self.state = state
-        if action is not None:
-            self.action = action
-    # Maybe add some more useful methods
-
-class State():
-    def __init__(self, eventMetadata = None):
-        self.envMD = eventMetadata
-        self.visibleObjects = [obj for obj in eventMetadata['objects'] if obj['visible']]
-    
-    def __repr__(self) -> str:
-        return f"""\u007b
-    \"Visible Objects\": {json.dumps(self.visibleObjects, sort_keys=True, indent=4)},
-    \"Agent\": \u007b 
-        \"x\": {self.envMD['agent']['position']['x']},
-        \"y\": {self.envMD['agent']['position']['y']},
-        \"z\": {self.envMD['agent']['position']['z']}
-    \u007d
-\u007d"""
-    
-    def getManhattanDistance(self):
-        return np.sqrt(self.envMD['agent']['position']['x']**2 
-                       + self.envMD['agent']['position']['y']**2 
-                       + self.envMD['agent']['position']['z']**2)
-
-    def getNumOfDifferentVisibleObjects(self, otherState):
-        count = 0 
-        for (obj1, obj2) in (self.visibleObjects, otherState.visibleObjects):
-            if obj1["ObjectId"] is not obj2["ObjectId"]:
-                count += 1
-        return count
-
-class Action():
-    def __init__(self, actionType = None, objectOn = None):
-        self.actionType = actionType
-        self.objectOn = objectOn
-
 def getPotentialActions(state):
     potentialActions = MOVEMENT_ACTION_TYPES
     if len(state.visibleObjects) != 0:
