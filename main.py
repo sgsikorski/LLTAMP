@@ -6,11 +6,8 @@ import lifelonglearning as ll
 from tqdm import tqdm
 
 # Some global variables
-Buffer = []
-BufferStream = []
-
-# Learning threshold
-threshold = 0.05
+Buffer = set()
+BufferStream = set()
 
 # Training the interactive agent in the ai2thor environments
 def train(controller, environments):
@@ -18,15 +15,12 @@ def train(controller, environments):
         # Init this environment's buffer memory to empty
         M = []
         # Reset the controller to the new environment
-        # controller.reset(scene=environment)
-        event = controller.step("MoveAhead")
+        controller.reset(scene=environment)
+        # event = controller.step("MoveAhead")
         
         # Initial state
         state = util.State(controller.last_event.metadata)
-        with open("ExampleState.json", "w+") as f:
-            f.write(repr(state))
-        
-        return
+        M.append(state)
 
         # Run this environment actions for 100 seconds
         startTime = time.perf_counter()
@@ -50,9 +44,13 @@ def train(controller, environments):
 
             newState = util.State(event.metadata)
             state = newState
+            M.append(state)
         
         # Lifelong Learning Componenet
         theta_k = ll.A_cl()
+
+        # Shrink the buffer to size n - |M_k|
+        # B = B.union(M_k)
         
 # Let's test the agent in the ai2thor environments
 def test():
@@ -61,7 +59,7 @@ def test():
 
 def main():
     controller = Controller(
-        agentMode = "locobot",
+        agentMode = "default",
         visibilityDistance=1.5,
         scene="FloorPlan1",
         gridSize=0.25,
