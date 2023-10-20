@@ -1,16 +1,17 @@
 from ai2thor.controller import Controller
 import time
 import torch
-from util import State, Action, Transition
+from util import State, Action, Transition, utilConstants
 import lifelonglearning as ll
 from tqdm import tqdm
+import json
 
 # Some global variables
 Buffer = set()
 BufferStream = set()
 
 # Training the interactive agent in the ai2thor environments
-def train(controller, environments):
+def train(controller, environments, goal):
     for environment in tqdm(environments, desc="Training the model on the environments"):
         # Init this environment's buffer memory to empty
         M = []
@@ -26,7 +27,7 @@ def train(controller, environments):
         startTime = time.perf_counter()
         while(time.perf_counter() - startTime < 100):
             # Determine action
-            action = ll.InitialPolicy(state)
+            action = ll.InitialPolicy(controller, state, goal["objectId"])
             transition = Transition(state, action)
 
             # Execute action
@@ -62,7 +63,7 @@ def main():
         agentMode = "default",
         visibilityDistance=1.5,
         scene="FloorPlan1",
-        gridSize=0.25,
+        gridSize=utilConstants.GRIDSIZE,
         movementGaussianSigma = 0,
         rotateStepDegress=90,
         rotateGaussianSigma = 0,
@@ -75,7 +76,14 @@ def main():
     bathrooms = [f"FloorPlan{400 + i}" for i in range(1, 31)]
 
     environments = kitchens + living_rooms + bedrooms + bathrooms
-    train(controller, environments)
+
+    try:
+        with open("goalTasks.json") as f:
+            goalObjects = json.load(f)
+    except FileNotFoundError as e:
+        print(f"{e}. Now terminating")
+        return
+    train(controller, environments, goalObjects[0])
     test()
 
     return
