@@ -12,6 +12,8 @@ def getPotentialActions(state):
                 potentialActions.append("MoveHeldObject")
                 potentialActions.append("PushObject")
 
+GRIDSIZE = 0.25
+
 # Possible goal objects
 TARGET_OBJECT_TYPES = [
     "AlarmClock,"
