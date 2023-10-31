@@ -34,13 +34,16 @@ class State():
     
     def getManhattanDistance(self):
         return np.sqrt(self.agentX**2 + self.agentY**2 + self.agentZ**2)
+    
+    def getObjManhattanDistance(self, obj):
+        return np.sqrt(obj["position"]["x"]**2 + obj["position"]["y"]**2 + obj["position"]["z"]**2)
 
-    def getNumOfDifferentVisibleObjects(self, otherState):
-        count = 0 
-        for (obj1, obj2) in (self.visibleObjects, otherState.visibleObjects):
-            if obj1["ObjectId"] is not obj2["ObjectId"]:
-                count += 1
-        return count
+    def getObjDiff(self, otherState):
+        inBoth = list(set(self.visibleObjects).intersection(set(otherState.visibleObjects)))
+        numDiff = 10 * (len(self.visibleObjects) + len(otherState.visibleObjects) - len(inBoth)) 
+        for obj in inBoth:
+            numDiff += self.getObjManhattanDistance(obj) - otherState.getObjManhattanDistance(obj)
+        return numDiff
 
     def mapPosToObjs(self, positions):
         reachableObjects = []

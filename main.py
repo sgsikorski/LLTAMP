@@ -27,7 +27,7 @@ def train(controller, environments, goal):
         startTime = time.perf_counter()
         while(time.perf_counter() - startTime < 100):
             # Determine action
-            action = ll.InitialPolicy(controller, M_k, goal["objectId"])
+            action = ll.InitialPolicy(state, goal["objectId"])
             transition = Transition(state, action)
 
             # Execute action

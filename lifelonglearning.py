@@ -6,25 +6,6 @@ import numpy as np
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
 
-def findNearestState(states, state2):
-    min = "inf"
-    nearestState = None
-    for state in states:
-        diff = difference(state, state2)
-        if (diff) < min:
-            min = diff
-            nearestState = state
-    return nearestState
-
-# Decide to move in x or y direction based on which is closer to the sampled node
-def useXorY(x1, y1, x2, y2):
-    if (x1 - x2 == 0): return "y"
-    if (y1 - y2 == 0): return "x"
-    if (np.abs(x2 - x1) == np.abs(y2 - y1)):
-        return ("x" if random.randint(0, 1) == 0 else "y")
-    return ("x" if np.abs(x2 - x1) < np.abs(y2 - y1) else "y")
-    
-
 # Sampling based policy
 def InitialPolicy(state, goalTasks):
     objOn = None
@@ -60,7 +41,7 @@ def difference(state1, state2):
     diff = 0
     # Take manhattan distance
     diff += state1.getManhattanDistance() - state2.getManhattanDistance()
-    diff += 10 * state1.getNumOfDifferentVisibleObjects(state2)
+    diff += state1.getObjDiff(state2)
     return diff
 
 # Checking if a transition (state, action) is suboptimal
