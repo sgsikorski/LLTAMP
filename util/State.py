@@ -1,6 +1,8 @@
 import numpy as np
 import json
+from dataclasses import dataclass
 
+@dataclass(frozen=True, order=True)
 class State():
     def __init__(self, eventMetadata = None):
         self.envMD = eventMetadata
@@ -8,6 +10,7 @@ class State():
         self.agentY = eventMetadata['agent']['position']['y']
         self.agentZ = eventMetadata['agent']['position']['z']
         self.visibleObjects = [obj for obj in eventMetadata['objects'] if obj['visible']]
+        self.reachableObjects = self.mapPosToObjs(eventMetadata["actionReturn"])
     
     def __repr__(self) -> str:
         return f"""\u007b
@@ -26,12 +29,11 @@ class State():
         return (self.agentX == other.agentX 
                 and self.agentY == other.agentY 
                 and self.agentZ == other.agentZ 
-                and self.visibleObjects == other.visibleObjects)
+                and self.visibleObjects == other.visibleObjects
+                and self.reachableObjects == other.reachableObjects)
     
     def getManhattanDistance(self):
-        return np.sqrt(self.envMD['agent']['position']['x']**2 
-                       + self.envMD['agent']['position']['y']**2 
-                       + self.envMD['agent']['position']['z']**2)
+        return np.sqrt(self.agentX**2 + self.agentY**2 + self.agentZ**2)
 
     def getNumOfDifferentVisibleObjects(self, otherState):
         count = 0 
@@ -40,11 +42,9 @@ class State():
                 count += 1
         return count
 
-    def scanForGoal(self, controller, goalObject, rotateStepDegrees=90):
-        for _ in range(0, 360, rotateStepDegrees):
-            controller.step("RotateRight", degrees=rotateStepDegrees)
-            if (self.visibleObjects is not None):
-                for obj in self.visibleObjects:
-                    if (obj["objectId"] == goalObject):
-                        return obj
-        return None
+    def mapPosToObjs(self, positions):
+        reachableObjects = []
+        for obj in self.visibleObjects:
+            if (obj["position"] == positions):
+                reachableObjects.append(obj)
+        return reachableObjects

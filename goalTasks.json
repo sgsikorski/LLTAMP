@@ -1,20 +1,20 @@
 [
     {
-        "ObjectId": "Fridge|-02.10|+00.00|+01.07",
-        "Position": {
+        "objectId": "Fridge|-02.10|+00.00|+01.07",
+        "position": {
             "x": -2.10,
             "y": 0.00,
             "z": 1.07
         },
-        "Status": "Open"
+        "status": "Open"
     },
     {
-        "ObjectId": "Fridge|-02.10|+00.00|+01.07",
-        "Position": {
+        "objectId": "Fridge|-02.10|+00.00|+01.07",
+        "position": {
             "x": -2.10,
             "y": 0.00,
             "z": 1.07
         },
-        "Status": "Closed"
+        "status": "Closed"
     }
 ]

@@ -6,15 +6,15 @@ import numpy as np
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
 
-def findNearestNode(space, x, y):
+def findNearestState(states, state2):
     min = "inf"
-    nearestNode = None
-    for node in space:
-        diff = np.sqrt(node.x - x)**2 + (node.y - y)**2
+    nearestState = None
+    for state in states:
+        diff = difference(state, state2)
         if (diff) < min:
             min = diff
-            nearestNode = node
-    return nearestNode
+            nearestState = state
+    return nearestState
 
 # Decide to move in x or y direction based on which is closer to the sampled node
 def useXorY(x1, y1, x2, y2):
@@ -26,49 +26,26 @@ def useXorY(x1, y1, x2, y2):
     
 
 # Sampling based policy
-def InitialPolicy(controller, state, space, goalObject):
-    action = Action()
-    potentialActions = utilConstants.getPotentialActions(state)
-
-    # Do a 360 degree scan of the scene
-    # If goal object is visible, move towards it
+def InitialPolicy(state, goalTasks):
+    objOn = None
+    # If goal object is visible, interact with it
         # Will introduce limitations of object that obstruct movement but not vision
-    obj = state.scanForGoal(controller, goalObject)
-    if (obj is not None):
-        # Move towards goal object
-        objPos = obj["position"]
-        useXorY(state.agentX, state.agentY, objPos["x"], objPos["y"])
-
-
+    if (goalTasks["objectId"] in state.reachableObjects):
+        objOn = goalTasks["objectId"]
+        actionType = utilConstants.determineAction(goalTasks["status"])
     else:
-    # Check if there's a grabable object in the scene
-    # Allow sampling of actions on the grabable object
-    # If multiple grabable objects, sample from the closest one
-
-    # RRT to goal node at x=1, y=1
-    # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
-        x = random.randint(-40, 40) * utilConstants.GRIDSIZE
-        y = random.randint(-40, 40) * utilConstants.GRIDSIZE
-
-        magX = np.sign(x - state.agentX)
-        magY = np.sign(y - state.agentY)
-
-        # We'll choose to go the x or y direction by whichever is less to the sampled node
-        nearestNode = findNearestNode(space, x, y)
-        if (nearestNode is None):
-            raise ValueError("Did you possibly not intialize the state space?")
-        
-        # Can one of the potential actions on the visible actions get us closer to x, y?
-
-        
-        if useXorY(x, y, nearestNode.x, nearestNode.y) == "x": magY = 0 
-        else: magX = 0
-        newNode = Node(nearestNode.x + magX * utilConstants.GRIDSIZE, 
-                    nearestNode.y + magY * utilConstants.GRIDSIZE, 
-                    nearestNode)
-        space.append(newNode)
-
-    action.actionType = ("MoveRight" if magX > 0 else "MoveLeft") if useXorY(x, y) == "x" else ("MoveAhead" if magY > 0 else "MoveBack")
+        match(random.randint(0, 2)):
+            case 0:
+                # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
+                sam = random.randint(-40, 40) * utilConstants.GRIDSIZE
+                samMag = np.sign(sam - state.agentY)
+                actionType = ("MoveAhead" if samMag > 0 else "MoveBack")
+            case 1:
+                actionType = "RotateRight" if random.randint(0, 1) == 0 else "RotateLeft"
+            case 2:
+                # Change to randomly pick action of possible actions
+                actionType = "PickupObject"
+    action = Action(actionType, objOn)
     return action
 
 # Learnable policy
@@ -83,7 +60,7 @@ def difference(state1, state2):
     diff = 0
     # Take manhattan distance
     diff += state1.getManhattanDistance() - state2.getManhattanDistance()
-    diff += state1.getNumOfDifferentVisibleObjects(state2)
+    diff += 10 * state1.getNumOfDifferentVisibleObjects(state2)
     return diff
 
 # Checking if a transition (state, action) is suboptimal

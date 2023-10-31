@@ -14,20 +14,20 @@ BufferStream = set()
 def train(controller, environments, goal):
     for environment in tqdm(environments, desc="Training the model on the environments"):
         # Init this environment's buffer memory to empty
-        M = []
+        M_k = set()
         # Reset the controller to the new environment
         controller.reset(scene=environment)
         # event = controller.step("MoveAhead")
         
         # Initial state
         state = State(controller.last_event.metadata)
-        M.append(state)
+        M_k.append(state)
 
         # Run this environment actions for 100 seconds
         startTime = time.perf_counter()
         while(time.perf_counter() - startTime < 100):
             # Determine action
-            action = ll.InitialPolicy(controller, state, goal["objectId"])
+            action = ll.InitialPolicy(controller, M_k, goal["objectId"])
             transition = Transition(state, action)
 
             # Execute action
@@ -41,17 +41,16 @@ def train(controller, environments, goal):
             # Select s_p and a_p from BufferStream
             if (ll.D(transition) < ll.threshold):
                 newTransition = ll.A_correct(state, BufferStream)
-                M.append(newTransition)
+                M_k.append(newTransition)
 
-            newState = State(event.metadata)
             state = newState
-            M.append(state)
+            M_k.append(state)
         
         # Lifelong Learning Componenet
         theta_k = ll.A_cl()
 
         # Shrink the buffer to size n - |M_k|
-        # B = B.union(M_k)
+        B = B.union(M_k)
         
 # Let's test the agent in the ai2thor environments
 def test():
@@ -79,11 +78,11 @@ def main():
 
     try:
         with open("goalTasks.json") as f:
-            goalObjects = json.load(f)
+            goalTasks = json.load(f)
     except FileNotFoundError as e:
         print(f"{e}. Now terminating")
         return
-    train(controller, environments, goalObjects[0])
+    train(controller, environments, goalTasks[0])
     test()
 
     return

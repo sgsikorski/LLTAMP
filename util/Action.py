@@ -1,4 +1,6 @@
+from dataclasses import dataclass
+
+@dataclass(frozen=True, order=True)
 class Action():
-    def __init__(self, actionType = None, objectOn = None):
-        self.actionType = actionType
-        self.objectOn = objectOn
+    actionType: str
+    objectOn: str

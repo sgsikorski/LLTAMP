@@ -2,15 +2,24 @@
 Utility file to help with global constants and some useful abstractions and methods
 """
 def getPotentialActions(state):
-    potentialActions = MOVEMENT_ACTION_TYPES
-    if len(state.visibleObjects) != 0:
-        for obj in state.visibleObjects:
+    potentialActions = []
+    if len(state.reachableObjects) != 0:
+        for obj in state.reachableObjects:
             if (obj['pickupable']):
                 potentialActions.append("PickupObject")
                 potentialActions.append("PutObject")
             if (obj['moveable']):
                 potentialActions.append("MoveHeldObject")
                 potentialActions.append("PushObject")
+    return potentialActions
+
+def determineAction(status):
+    match(status):
+        case "open":
+            return "OpenObject"
+        case "closed":
+            return "CloseObject"
+    return
 
 GRIDSIZE = 0.25
 
