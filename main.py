@@ -43,6 +43,7 @@ def train(controller, environments, goal):
                 newTransition = ll.A_correct(state, BufferStream)
                 M_k.append(newTransition)
 
+            newState = State(event.metadata)
             state = newState
             M_k.append(state)
         
