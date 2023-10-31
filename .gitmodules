@@ -1,0 +1,3 @@
+[submodule "GradientEpisodicMemory"]
+	path = GradientEpisodicMemory
+	url = https://github.com/facebookresearch/GradientEpisodicMemory.git
