@@ -15,10 +15,12 @@ def getPotentialActions(state):
 
 def determineAction(status):
     match(status):
-        case "open":
+        case "Open":
             return "OpenObject"
-        case "closed":
+        case "Closed":
             return "CloseObject"
+        case "PickUp":
+            return "PickupObject"
     return
 
 GRIDSIZE = 0.25

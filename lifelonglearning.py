@@ -9,28 +9,30 @@ threshold = 0.05
 # Sampling based policy
 def InitialPolicy(state, goalTasks):
     objOn = None
+    completeGoal = False
     # If goal object is visible, interact with it
         # Will introduce limitations of object that obstruct movement but not vision
-    if (goalTasks["objectId"] in state.reachableObjects):
+    if (goalTasks["objectId"] in state.reachObjName):
         objOn = goalTasks["objectId"]
         actionType = utilConstants.determineAction(goalTasks["status"])
-    elif (goalTasks["objectId"] in state.visibleObjects):
-        mag = np.sign(goalTasks["position"]["x"] - state.agentX)
-        actionType = "MoveAhead" if mag > 0 else "MoveBack"
+        completeGoal = True
+    #elif (goalTasks["objectId"] in state.visObjName):
+    #    mag = np.sign(goalTasks["position"]["x"] - state.agentX)
+    #    actionType = "MoveAhead" if mag > 0 else "MoveBack"
     else:
-        choices = 2 if len(state.reachableObjects) > 0 else 1
+        choices = 1 # if len(state.reachableObjects) < 0 else 2
         match(random.randint(0, choices)):
             case 0:
                 # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
                 sam = random.randint(-40, 40) * utilConstants.GRIDSIZE
-                samMag = np.sign(sam - state.agentY)
+                samMag = np.sign(sam - state.agentX)
                 actionType = ("MoveAhead" if samMag > 0 else "MoveBack")
             case 1:
                 actionType = "RotateRight" if random.randint(0, 1) == 0 else "RotateLeft"
             case 2:
                 # Change to randomly pick action of possible actions
                 actionType = "PickupObject"
-    action = Action.Action(actionType, objOn)
+    action = Action.Action(actionType, objOn, completeGoal)
     return action
 
 # Learnable policy

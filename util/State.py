@@ -9,15 +9,19 @@ class State():
     agentY: float
     agentZ: float
     visibleObjects: list = field(default_factory=list)
+    visObjName: list= field(default_factory=list)
     reachableObjects: list = field(default_factory=list)
+    reachObjName: list = field(default_factory=list)
 
-    def __init__(self, envMD):
+    def __init__(self, envMD, reachMD):
         self.envMD = envMD
         self.agentX = self.envMD['agent']['position']['x']
         self.agentY = envMD['agent']['position']['y']
         self.agentZ = envMD['agent']['position']['z']
         self.visibleObjects = [obj for obj in envMD['objects'] if obj['visible']]
-        self.reachableObjects = self.mapPosToObjs(envMD["actionReturn"])
+        self.visObjName = [obj['objectId'] for obj in self.visibleObjects]
+        self.reachableObjects = self.mapPosToObjs(reachMD)
+        self.reachObjName = [obj['objectId'] for obj in self.reachableObjects]
     
     def __repr__(self) -> str:
         return f"""\u007b
@@ -55,6 +59,9 @@ class State():
     def mapPosToObjs(self, positions):
         reachableObjects = []
         for obj in self.visibleObjects:
-            if (obj["position"] == positions):
-                reachableObjects.append(obj)
+            pos = obj["position"]
+            for post in positions:
+                if (np.abs(pos["x"]) - np.abs(post["x"]) <= 0.25 and np.abs(pos["z"]) - np.abs(post["z"]) <= 0.25):
+                    reachableObjects.append(obj)
+                    break
         return reachableObjects

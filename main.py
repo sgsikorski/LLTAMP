@@ -20,8 +20,16 @@ def train(controller, environments, goal):
         # event = controller.step("MoveAhead")
 
         # Initial state
-        state = State.State(controller.last_event.metadata)
+        state = State.State(controller.last_event.metadata, 
+                            controller.step("GetReachablePositions").metadata["actionReturn"])
         M_k.add(state)
+
+        #controller.step("RotateLeft")
+        #controller.step("RotateLeft")
+        #controller.step("MoveBack")
+        #controller.step("MoveBack")
+        #controller.step("MoveBack")
+        #s = (controller.last_event.metadata)
 
         # Run this environment actions for 100 seconds
         startTime = time.perf_counter()
@@ -31,7 +39,12 @@ def train(controller, environments, goal):
             transition = Transition.Transition(state, action)
 
             # Execute action
-            event = controller.step(action.actionType)
+            if action.objectOn is not None:
+                event = controller.step(action.actionType, objectId=action.objectOn)
+            else:
+                event = controller.step(action.actionType)
+            if (action.completeGoal):
+                break
             if (not event.metadata["lastActionSuccess"]):
                 # Handle an unsuccessful action
                 # For now, we'll just try a new action
@@ -44,15 +57,17 @@ def train(controller, environments, goal):
             #     newTransition = ll.A_correct(state, BufferStream)
             #     M_k.append(newTransition)
 
-            newState = State.State(event.metadata)
+            newState = State.State(controller.last_event.metadata,
+                                   controller.step("GetReachablePositions").metadata["actionReturn"])
             state = newState
             M_k.add(state)
         
         # Lifelong Learning Componenet
-        theta_k = ll.A_cl()
+        #theta_k = ll.A_cl()
 
         # Shrink the buffer to size n - |M_k|
-        B = B.union(M_k)
+        # Buffer = Buffer.union(M_k)
+        print(f"The number of actions taken in this environment is {len(M_k)}")
         
 # Let's test the agent in the ai2thor environments
 def test(controller, environments, goalTask):

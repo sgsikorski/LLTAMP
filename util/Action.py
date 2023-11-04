@@ -4,3 +4,4 @@ from dataclasses import dataclass
 class Action():
     actionType: str
     objectOn: str
+    completeGoal: bool
