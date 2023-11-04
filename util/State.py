@@ -1,16 +1,23 @@
 import numpy as np
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-@dataclass(frozen=True, order=True)
+@dataclass(init = False, repr=False, frozen=False, order=True)
 class State():
-    def __init__(self, eventMetadata = None):
-        self.envMD = eventMetadata
-        self.agentX = eventMetadata['agent']['position']['x']
-        self.agentY = eventMetadata['agent']['position']['y']
-        self.agentZ = eventMetadata['agent']['position']['z']
-        self.visibleObjects = [obj for obj in eventMetadata['objects'] if obj['visible']]
-        self.reachableObjects = self.mapPosToObjs(eventMetadata["actionReturn"])
+    envMD: dict
+    agentX: float
+    agentY: float
+    agentZ: float
+    visibleObjects: list = field(default_factory=list)
+    reachableObjects: list = field(default_factory=list)
+
+    def __init__(self, envMD):
+        self.envMD = envMD
+        self.agentX = self.envMD['agent']['position']['x']
+        self.agentY = envMD['agent']['position']['y']
+        self.agentZ = envMD['agent']['position']['z']
+        self.visibleObjects = [obj for obj in envMD['objects'] if obj['visible']]
+        self.reachableObjects = self.mapPosToObjs(envMD["actionReturn"])
     
     def __repr__(self) -> str:
         return f"""\u007b
@@ -23,7 +30,7 @@ class State():
 \u007d"""
     
     def __hash__(self):
-        return hash((self.agentX, self.agentY, self.agentZ, [obj["objectId"] for obj in self.visibleObjects]))
+        return hash((self.agentX, self.agentY, self.agentZ, tuple([obj["objectId"] for obj in self.visibleObjects])))
 
     def __eq__(self, other):
         return (self.agentX == other.agentX 

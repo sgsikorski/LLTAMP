@@ -1,4 +1,4 @@
-from util import utilConstants, Action, Node
+from util import utilConstants, Action
 import torch
 import random
 import numpy as np
@@ -14,8 +14,12 @@ def InitialPolicy(state, goalTasks):
     if (goalTasks["objectId"] in state.reachableObjects):
         objOn = goalTasks["objectId"]
         actionType = utilConstants.determineAction(goalTasks["status"])
+    elif (goalTasks["objectId"] in state.visibleObjects):
+        mag = np.sign(goalTasks["position"]["x"] - state.agentX)
+        actionType = "MoveAhead" if mag > 0 else "MoveBack"
     else:
-        match(random.randint(0, 2)):
+        choices = 2 if len(state.reachableObjects) > 0 else 1
+        match(random.randint(0, choices)):
             case 0:
                 # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
                 sam = random.randint(-40, 40) * utilConstants.GRIDSIZE
@@ -26,7 +30,7 @@ def InitialPolicy(state, goalTasks):
             case 2:
                 # Change to randomly pick action of possible actions
                 actionType = "PickupObject"
-    action = Action(actionType, objOn)
+    action = Action.Action(actionType, objOn)
     return action
 
 # Learnable policy
@@ -47,7 +51,7 @@ def difference(state1, state2):
 # Checking if a transition (state, action) is suboptimal
 # This is essentially using the learnable policy if the regular policy
 # can't find a good action and recovers/backtracks
-def D(state, action):
+def B(state, action):
     # Scoring method of a state and action to get to goal
     # Scored on how much closer we are to the goal object and if a non-movement
     # action satisfies the goal state of goal object or reduces the
@@ -59,6 +63,6 @@ def D(state, action):
 def A_correct(state_p, bStream):
     candiates = []
     for transition in bStream:
-        if (D(transition.state, transition.action) >= threshold):
+        if (B(transition.state, transition.action) >= threshold):
             candiates.append(transition.state)
     return min(candiates, key=lambda s: difference(s, state_p))

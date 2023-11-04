@@ -18,34 +18,35 @@ def train(controller, environments, goal):
         # Reset the controller to the new environment
         controller.reset(scene=environment)
         # event = controller.step("MoveAhead")
-        
+
         # Initial state
-        state = State(controller.last_event.metadata)
-        M_k.append(state)
+        state = State.State(controller.last_event.metadata)
+        M_k.add(state)
 
         # Run this environment actions for 100 seconds
         startTime = time.perf_counter()
         while(time.perf_counter() - startTime < 100):
             # Determine action
-            action = ll.InitialPolicy(state, goal["objectId"])
-            transition = Transition(state, action)
+            action = ll.InitialPolicy(state, goal)
+            transition = Transition.Transition(state, action)
 
             # Execute action
             event = controller.step(action.actionType)
             if (not event.metadata["lastActionSuccess"]):
                 # Handle an unsuccessful action
-                pass
+                # For now, we'll just try a new action
+                continue
             
-            BufferStream.append(transition)
+            BufferStream.add(transition)
 
             # Select s_p and a_p from BufferStream
-            if (ll.D(transition) < ll.threshold):
-                newTransition = ll.A_correct(state, BufferStream)
-                M_k.append(newTransition)
+            # if (ll.D(transition) < ll.threshold):
+            #     newTransition = ll.A_correct(state, BufferStream)
+            #     M_k.append(newTransition)
 
-            newState = State(event.metadata)
+            newState = State.State(event.metadata)
             state = newState
-            M_k.append(state)
+            M_k.add(state)
         
         # Lifelong Learning Componenet
         theta_k = ll.A_cl()
@@ -54,8 +55,29 @@ def train(controller, environments, goal):
         B = B.union(M_k)
         
 # Let's test the agent in the ai2thor environments
-def test():
+def test(controller, environments, goalTask):
     successRate = 0
+    for environment in tqdm(environments, desc="Testing the model on the environments"):
+        numActions = 0
+        controller.reset(scene=environment)
+
+        # Initial state
+        state = State.State(controller.last_event.metadata)
+        
+        startTime = time.perf_counter()
+        while(time.perf_counter() - startTime < 100):
+            # Determine action
+            a0 = ll.InitialPolicy(state, goalTask["objectId"])
+            aHat = None # ll.ThetaPolicy(state, a0, theta_k)
+            
+            # Pick action with better score
+            action = max([a0, aHat], key=lambda a: ll.B(state, a))
+            event = controller.step(action.actionType)
+            if (not event.metadata["lastActionSuccess"]):
+                # Handle an unsuccessful action
+                # For now, we'll just try a new action
+                continue
+            numActions += 1
     return successRate
 
 def main():
@@ -84,7 +106,7 @@ def main():
         print(f"{e}. Now terminating")
         return
     train(controller, environments, goalTasks[0])
-    test()
+    test(controller, environments, goalTasks[0])
 
     return
 

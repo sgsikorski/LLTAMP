@@ -1,9 +1,11 @@
+from dataclasses import dataclass, field
+from util.State import State
+from util.Action import Action
+
+@dataclass(frozen = True, order=True)
 class Transition():
-    def __init__(self, state=None, action=None):
-        if state is None or action is None:
-            raise TypeError("State and action must be defined types for a transition")
-        self.state = state
-        self.action = action
+    state: State
+    action: Action
 
     def updateTransition(self, state = None, action = None):
         if state is not None:
