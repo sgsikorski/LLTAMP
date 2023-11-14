@@ -4,6 +4,7 @@ from util import State, Action, Transition, utilConstants
 import lifelonglearning as ll
 from tqdm import tqdm
 import json
+import argparse
 
 # Some global variables
 Buffer = set()
@@ -91,6 +92,16 @@ def test(controller, environments, goalTask):
     return successRate
 
 def main():
+    parser = argparse.ArgumentParser(description="Training and testing an interactive robot for task completion in iTHOR")
+    parser.add_argument("-tr", "--train", action="store_true", help="Train the model")
+    parser.add_argument("-te", "--test", action="store_true", help="Test the model")    
+    parser.add_argument("-mp", "--model_path", dest='model_path', type=str, help="Path to the model")
+    parser.add_argument("-gp", "--goal_path", dest='goal_path', default="goalTasks.json", type=str, help="Path to the goal tasks")
+    parser.add_argument("-envs", "--environments", type=str, help="Environments to train and test the model on")
+    parser.add_argument("-enum", "--enum", type=int, choices=range(1, 31), default=31, help="Number of environments to train and test the model on")
+    args = parser.parse_args()
+
+    model = ll.Model()
     controller = Controller(
         agentMode = "default",
         visibilityDistance=1.5,
@@ -101,26 +112,36 @@ def main():
         rotateGaussianSigma = 0,
         fieldOfView = 90
     )
-    # Add all iThor scenes
-    kitchens = [f"FloorPlan{i}" for i in range(1, 31)]
-    living_rooms = [f"FloorPlan{200 + i}" for i in range(1, 31)]
-    bedrooms = [f"FloorPlan{300 + i}" for i in range(1, 31)]
-    bathrooms = [f"FloorPlan{400 + i}" for i in range(1, 31)]
 
-    environments = kitchens # + living_rooms + bedrooms + bathrooms
+    # Add which environments we want to conduct over
+    environments = []
+    kitchens = [f"FloorPlan{i}" for i in range(1, args.enum)]
+    living_rooms = [f"FloorPlan{200 + i}" for i in range(1, args.enum)]
+    bedrooms = [f"FloorPlan{300 + i}" for i in range(1, args.enum)]
+    bathrooms = [f"FloorPlan{400 + i}" for i in range(1, args.enum)]
+    
+    envsToUse = args.environments if args.environments is not None else "klbeba"
+    if "k" in envsToUse: environemnts += kitchens
+    if "l" in envsToUse: environemnts += living_rooms
+    if "be" in envsToUse: environemnts += bedrooms
+    if "ba" in envsToUse: environemnts += bathrooms
 
     try:
-        with open("goalTasks.json") as f:
+        with open(args.goal_path) as f:
             goalTasks = json.load(f)
     except FileNotFoundError as e:
-        print(f"{e}. Now terminating")
+        print(f"{e}. Please define a goal tasks .json file accordingly. 
+              There is also an example goalTasks.json for use. Now terminating")
         return
     
-    model = ll.Model()
-    train(controller, environments, goalTasks, model)
-    test(controller, environments, goalTasks, model)
+    if args.train:
+        train(controller, environments, goalTasks, model)
+        model.saveModel(args.model_path)
+    if args.test:
+        model.loadModel(args.model_path)
+        test(controller, environments, goalTasks, model)
 
-    return
+    print("Done!")
 
 if __name__ == '__main__':
     main()

@@ -7,17 +7,28 @@ import numpy as np
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
 
+class NetInputs():
+    def __init__(self, n_layers, n_hiddens, lr, cuda, n_memories, memory_strength):
+        self.n_layers = n_layers
+        self.n_hiddens = n_hiddens
+        self.lr = lr
+        self.cuda = cuda
+        self.n_memories = n_memories
+        self.memory_strength = memory_strength
+        self.data_file = None
+
 # pi_theta policy model
 # Takes in a state and predicts an action
 class Model(Net):
     def __init__(self, input_dim=1):
         # Update these args for better performance
-        args = {'n_layers': 1, 
-                'n_hiddens': 1, 
-                'lr': 0.001, 
-                'cuda': False, 
-                'memory_strength': 0.5,
-                'n_memories': 1}
+        
+        args = NetInputs(n_layers=2, 
+                         n_hiddens=100, 
+                         lr=0.001, 
+                         cuda=False, 
+                         n_memories=300, 
+                         memory_strength=0.5)
         # Update input_dim to map from state to features
         super(Model, self).__init__(n_inputs=input_dim, 
                                     n_outputs=1, 
@@ -25,14 +36,16 @@ class Model(Net):
                                     args=args)
     
     def getThetaParameter(self):
-        return self.net.parameters()
+        return self.parameters()
 
     def predict(self, state):
         with torch.no_grad():
             return self.net(state)
     
-    def update_theta(self):
-        pass
+    def update_theta(self, M_k, Buffer):
+        for t, transition in enumerate(Buffer):
+            for state, action in zip(transition[0], transition[1]):
+                self.observe(state, t, action)
         
     def saveModel(self, path='models/trained_agent.pt'):
         torch.save(self.net.state_dict(), path)
