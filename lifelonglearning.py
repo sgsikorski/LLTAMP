@@ -1,10 +1,44 @@
 from util import utilConstants, Action
 import torch
+from GradientEpisodicMemory.model.gem import Net
 import random
 import numpy as np
 
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
+
+# pi_theta policy model
+# Takes in a state and predicts an action
+class Model(Net):
+    def __init__(self, input_dim=1):
+        # Update these args for better performance
+        args = {'n_layers': 1, 
+                'n_hiddens': 1, 
+                'lr': 0.001, 
+                'cuda': False, 
+                'memory_strength': 0.5,
+                'n_memories': 1}
+        # Update input_dim to map from state to features
+        super(Model, self).__init__(n_inputs=input_dim, 
+                                    n_outputs=1, 
+                                    n_tasks=1, 
+                                    args=args)
+    
+    def getThetaParameter(self):
+        return self.net.parameters()
+
+    def predict(self, state):
+        with torch.no_grad():
+            return self.net(state)
+    
+    def update_theta(self):
+        pass
+        
+    def saveModel(self, path='models/trained_agent.pt'):
+        torch.save(self.net.state_dict(), path)
+    
+    def loadModel(self, path='models/trained_agent.pt'):
+        self.net.load_state_dict(torch.load(path))
 
 # Sampling based policy
 def InitialPolicy(state, goalTasks):
@@ -34,11 +68,6 @@ def InitialPolicy(state, goalTasks):
                 actionType = "PickupObject"
     action = Action.Action(actionType, objOn, completeGoal)
     return action
-
-# Learnable policy
-def ThetaPolicy():
-
-    return
 
 # We can define difference by measuring distance of agent locations
 # objects in the scene, and the states of the object
