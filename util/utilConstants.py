@@ -82,11 +82,15 @@ BACKGROUND_OBJECT_TYPES = [
     "Watch"
 ]
 
+ALL_OBJECT_TYPES = TARGET_OBJECT_TYPES + BACKGROUND_OBJECT_TYPES
+
 MOVEMENT_ACTION_TYPES = [
     "MoveAhead",
     "MoveBack",
     "MoveLeft",
-    "MoveRight"
+    "MoveRight",
+    "RotateRight",
+    "RotateLeft"
 ]
 
 ACTION_TYPES = [
@@ -111,3 +115,5 @@ ACTION_TYPES = [
     "EmptyLiquidFromObject",
     "UseUpObject"
 ]
+
+ALL_ACTIONS = MOVEMENT_ACTION_TYPES + ACTION_TYPES

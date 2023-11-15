@@ -20,9 +20,7 @@ class NetInputs():
 # pi_theta policy model
 # Takes in a state and predicts an action
 class Model(Net):
-    def __init__(self, input_dim=1):
-        # Update these args for better performance
-        
+    def __init__(self, input_dim=3):
         args = NetInputs(n_layers=2, 
                          n_hiddens=100, 
                          lr=0.001, 
@@ -31,8 +29,8 @@ class Model(Net):
                          memory_strength=0.5)
         # Update input_dim to map from state to features
         super(Model, self).__init__(n_inputs=input_dim, 
-                                    n_outputs=1, 
-                                    n_tasks=1, 
+                                    n_outputs=len(utilConstants.ALL_ACTIONS), 
+                                    n_tasks=30, 
                                     args=args)
     
     def getThetaParameter(self):
@@ -42,11 +40,15 @@ class Model(Net):
         with torch.no_grad():
             return self.net(state)
     
-    def update_theta(self, M_k, Buffer):
-        for t, transition in enumerate(Buffer):
-            for state, action in zip(transition[0], transition[1]):
-                self.observe(state, t, action)
-        
+    def update_theta(self, Buffer, t):
+        # Size of s needs to equals the input_dim of the model
+        s = []
+        a = []
+        for transition in Buffer:
+            s.append([transition.state.agentX, transition.state.agentY, transition.state.agentZ])
+            a.append(utilConstants.ALL_ACTIONS.index(transition.action.actionType))
+        self.observe(torch.tensor(s), t, torch.tensor(a))
+
     def saveModel(self, path='models/trained_agent.pt'):
         torch.save(self.net.state_dict(), path)
     

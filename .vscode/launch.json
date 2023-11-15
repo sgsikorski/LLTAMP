@@ -6,7 +6,7 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-envs", "k"],
+        "args": ["--train", "-envs", "k", "-v"],
     },
 ]   
 }

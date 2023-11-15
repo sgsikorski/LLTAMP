@@ -1,8 +1,9 @@
 import numpy as np
 import json
 from dataclasses import dataclass, field
+import torch
 
-@dataclass(init = False, repr=False, frozen=False, order=True)
+@dataclass(init = False, repr=False, frozen=False, order=False)
 class State():
     envMD: dict
     agentX: float
@@ -15,7 +16,7 @@ class State():
 
     def __init__(self, envMD, reachMD):
         self.envMD = envMD
-        self.agentX = self.envMD['agent']['position']['x']
+        self.agentX = envMD['agent']['position']['x']
         self.agentY = envMD['agent']['position']['y']
         self.agentZ = envMD['agent']['position']['z']
         self.visibleObjects = [obj for obj in envMD['objects'] if obj['visible']]
@@ -24,8 +25,10 @@ class State():
         self.reachObjName = [obj['objectId'] for obj in self.reachableObjects]
     
     def __repr__(self) -> str:
-        return f"""\u007b
-    \"Visible Objects\": {json.dumps(self.visibleObjects, sort_keys=True, indent=4)},
+        return f"""
+State: \u007b
+    \"Visible Objects\": {self.visObjName},
+    \"Reachable Objects\": {self.reachObjName},
     \"Agent\": \u007b 
         \"x\": {self.agentX},
         \"y\": {self.agentY},

@@ -12,4 +12,6 @@ class Transition():
             self.state = state
         if action is not None:
             self.action = action
-    # Maybe add some more useful methods
+    
+    def __repr__(self) -> str:
+        return f"{self.state}{self.action}"
