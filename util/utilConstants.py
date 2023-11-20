@@ -11,6 +11,22 @@ def getPotentialActions(state):
             if (obj['moveable']):
                 potentialActions.append("MoveHeldObject")
                 potentialActions.append("PushObject")
+            if (obj['breakable']):
+                potentialActions.append("BreakObject")
+            if (obj['openable']):
+                potentialActions.append("OpenObject")
+                potentialActions.append("CloseObject")
+            if (obj['canBeUsedUp']):
+                potentialActions.append("UseUpObject")
+            if (obj['canFillWithLiquid']):
+                potentialActions.append("FillObjectWithLiquid")
+            if (obj['cookable']):
+                potentialActions.append("CookObject")
+            if (obj['sliceable']):
+                potentialActions.append("SliceObject")
+            if (obj['dirtyable']):
+                potentialActions.append("DirtyObject")
+                potentialActions.append("CleanObject")
     return potentialActions
 
 def determineAction(status):
@@ -21,7 +37,28 @@ def determineAction(status):
             return "CloseObject"
         case "PickUp":
             return "PickupObject"
-    return
+        case "Put":
+            return "PutObject"
+        case "Break":
+            return "BreakObject"
+        case "Cook":
+            return "CookObject"
+        case "Slice":
+            return "SliceObject"
+        case "Dirty":
+            return "DirtyObject"
+        case "Clean":
+            return "CleanObject"
+        case "UseUp":
+            return "UseUpObject"
+        case "Fill":
+            return "FillObjectWithLiquid"
+        case "MoveHeld":
+            return "MoveHeldObject"
+        case "Push":
+            return "PushObject"
+        case _:
+            return "MoveAhead"
 
 GRIDSIZE = 0.25
 

@@ -41,7 +41,7 @@ class Agent():
             startTime = time.perf_counter()
             while(time.perf_counter() - startTime < 100):
                 nTime = time.perf_counter()
-                while (time.perf_counter() - nTime < 1):
+                while (time.perf_counter() - nTime < 0.5):
                     continue
                 # Determine action
                 action = ll.InitialPolicy(state, goal)
@@ -49,10 +49,7 @@ class Agent():
                 RRT_k.add(transition)
 
                 # Execute action
-                if action.objectOn is not None:
-                    event = controller.step(action.actionType, objectId=action.objectOn)
-                else:
-                    event = controller.step(action.actionType)
+                event = controller.step(action.actionType, objectId=action.objectOn) if action.objectOn is not None else controller.step(action.actionType)
 
                 if (not event.metadata["lastActionSuccess"]):
                     # Handle an unsuccessful action
@@ -64,6 +61,8 @@ class Agent():
 
                 # We accomplished the goal, do additional reporting here
                 if (action.completeGoal):
+                    print(f"Goal for {environment}_{idx+1} completed!")
+                    controller.step(action="Done")
                     break
                 
                 newState = State.State(controller.last_event.metadata,
@@ -81,6 +80,8 @@ class Agent():
 
             if (self.verbose):
                 print(f"The number of actions taken in environment {environment} is {len(M_k)}.")
+                print(f"Goal: {goal}")
+                print(f"State to achieve goal: {state}")
                 print(f"The robot failed to do an action {fails} times.")
                 for i, transition in enumerate(RRT_k):
                     print(f"Transition {i} : {transition}")
@@ -92,6 +93,7 @@ class Agent():
         for idx, environment in enumerate(tqdm(self.environments, desc="Testing the model on the environments")):
             numInitActions = 0
             numThetaActions = 0
+            fails = 0
             transitionStream = set()
             controller.reset(scene=environment)
 
@@ -108,14 +110,16 @@ class Agent():
                     continue
                 # Determine action
                 a0 = ll.InitialPolicy(state, goal)
-                aHat = ll.Model.predict(state)
+                aHat = utilConstants.ALL_ACTIONS[ll.Model.predict(state)]
                 
                 # Pick action with better score
-                action = max([a0, aHat], key=lambda a: ll.B(state, a))
-                event = controller.step(action.actionType)
+                action = min([a0, aHat], key=lambda a: ll.B(state, a, controller, goal))
+                # Execute action
+                event = controller.step(action.actionType, objectId=action.objectOn) if action.objectOn is not None else controller.step(action.actionType)
                 if (not event.metadata["lastActionSuccess"]):
                     # Handle an unsuccessful action
                     # For now, we'll just try a new action
+                    fails += 1
                     continue
             
                 if (action == a0): numInitActions += 1
@@ -125,6 +129,8 @@ class Agent():
 
                 if action.completeGoal:
                     successRate += 1
+                    print(f"Goal for {environment}_{idx+1} completed!")
+                    controller.step(action="Done")
                     break
                 
                 newState = State.State(controller.last_event.metadata,
@@ -135,6 +141,7 @@ class Agent():
 
             if (self.verbose):
                 print(f"The number of actions taken in environment {environment} is {numInitActions + numThetaActions}.")
+                print(f"The robot failed to do an action {fails} times.")
                 print(f"The number of actions taken from the initial policy is {numInitActions}.")
                 print(f"The number of actions taken from the theta policy is {numThetaActions}.")
                 for i, transition in enumerate(transitionStream):

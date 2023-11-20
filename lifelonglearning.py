@@ -1,4 +1,4 @@
-from util import utilConstants, Action
+from util import utilConstants, Action, State
 import torch
 from GradientEpisodicMemory.model.gem import Net
 import random
@@ -18,7 +18,6 @@ class NetInputs():
         self.data_file = None
 
 # pi_theta policy model
-# Takes in a state and predicts an action
 class Model(Net):
     def __init__(self, input_dim=3):
         args = NetInputs(n_layers=2, 
@@ -63,7 +62,11 @@ def InitialPolicy(state, goalTasks):
         # Will introduce limitations of object that obstruct movement but not vision
     if (goalTasks["objectId"] in state.reachObjName):
         objOn = goalTasks["objectId"]
-        actionType = utilConstants.determineAction(goalTasks["status"])
+        objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
+        status = goalTasks["status"]
+        if status == "Move":
+            status = "MoveHeld" if objOnProp["pickupable"] else "Push"
+        actionType = utilConstants.determineAction(status)
         completeGoal = True
     #elif (goalTasks["objectId"] in state.visObjName):
     #    mag = np.sign(goalTasks["position"]["x"] - state.agentX)
@@ -94,21 +97,20 @@ def difference(state1, state2):
     diff += state1.getObjDiff(state2)
     return diff
 
-# Checking if a transition (state, action) is suboptimal
-# This is essentially using the learnable policy if the regular policy
-# can't find a good action and recovers/backtracks
-def B(state, action):
-    # Scoring method of a state and action to get to goal
-    # Scored on how much closer we are to the goal object and if a non-movement
-    # action satisfies the goal state of goal object or reduces the
-    # distance between current state and goal state by moving an object
-    return 0
-
-# From a transition in the bStream, find the least different state to the
-# passed in state such that D >= threshold
-def A_correct(state_p, bStream):
-    candiates = []
-    for transition in bStream:
-        if (B(transition.state, transition.action) >= threshold):
-            candiates.append(transition.state)
-    return min(candiates, key=lambda s: difference(s, state_p))
+def B(s, a, controller, goal):
+    b = "inf"
+    if a.actionType in utilConstants.MOVEMENT_ACTION_TYPES:
+        event = controller.step(a.actionType)
+        if (not event.metadata["lastActionSuccess"]):
+            return b
+        b = difference(s, State.State(controller.last_event.metadata, 
+                                    controller.step("GetReachablePositions").metadata["actionReturn"]))
+        controller.step(a.getOppositeActionType())
+    else:
+        # Logic on how to judge if an action is a good idea
+        if (goal["status"] == "Move"):
+            objPos = goal["objPosition"]
+            return np.sqrt((s.agentX - objPos["x"])**2 + (s.agentY - objPos["y"])**2 + (s.agentZ - objPos["z"])**2)
+        if (goal["objectId"] in s.reachObjName):
+            return 0
+    return b

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-@dataclass(frozen=True, order=True)
+@dataclass(frozen=True, order=False)
 class Action():
     actionType: str
     objectOn: str
@@ -13,3 +13,14 @@ Action: \u007b
     Object: {self.objectOn}, 
     Goal Complete: {self.completeGoal}
 \u007d"""
+    
+    def getOppositeActionType(self):
+        match(self.actionType):
+            case "MoveAhead":
+                return "MoveBack"
+            case "MoveBack":
+                return "MoveAhead"
+            case "RotateRight":
+                return "RotateLeft"
+            case "RotateLeft":
+                return "RotateRight"

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from util.State import State
 from util.Action import Action
 
-@dataclass(frozen = True, order=True)
+@dataclass(frozen = True, order=False)
 class Transition():
     state: State
     action: Action
