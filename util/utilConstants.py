@@ -1,32 +1,33 @@
 """
 Utility file to help with global constants and some useful abstractions and methods
 """
-def getPotentialActions(state):
+def getPotentialActions(obj):
     potentialActions = []
-    if len(state.reachableObjects) != 0:
-        for obj in state.reachableObjects:
-            if (obj['pickupable']):
-                potentialActions.append("PickupObject")
-                potentialActions.append("PutObject")
-            if (obj['moveable']):
-                potentialActions.append("MoveHeldObject")
-                potentialActions.append("PushObject")
-            if (obj['breakable']):
-                potentialActions.append("BreakObject")
-            if (obj['openable']):
-                potentialActions.append("OpenObject")
-                potentialActions.append("CloseObject")
-            if (obj['canBeUsedUp']):
-                potentialActions.append("UseUpObject")
-            if (obj['canFillWithLiquid']):
-                potentialActions.append("FillObjectWithLiquid")
-            if (obj['cookable']):
-                potentialActions.append("CookObject")
-            if (obj['sliceable']):
-                potentialActions.append("SliceObject")
-            if (obj['dirtyable']):
-                potentialActions.append("DirtyObject")
-                potentialActions.append("CleanObject")
+    if (obj['pickupable']):
+        potentialActions.append("PickupObject")
+        potentialActions.append("PutObject")
+    if (obj['moveable']):
+        potentialActions.append("MoveHeldObject")
+        potentialActions.append("PushObject")
+    if (obj['breakable']):
+        potentialActions.append("BreakObject")
+    if (obj['openable']):
+        potentialActions.append("OpenObject")
+        potentialActions.append("CloseObject")
+    if (obj['canBeUsedUp']):
+        potentialActions.append("UseUpObject")
+    if (obj['canFillWithLiquid']):
+        potentialActions.append("FillObjectWithLiquid")
+    if (obj['cookable']):
+        potentialActions.append("CookObject")
+    if (obj['sliceable']):
+        potentialActions.append("SliceObject")
+    if (obj['dirtyable']):
+        potentialActions.append("DirtyObject")
+        potentialActions.append("CleanObject")
+    if (obj['toggleable']):
+        potentialActions.append("ToggleObjectOn")
+        potentialActions.append("ToggleObjectOff")
     return potentialActions
 
 def determineAction(status):
@@ -57,6 +58,10 @@ def determineAction(status):
             return "MoveHeldObject"
         case "Push":
             return "PushObject"
+        case "On":
+            return "ToggleObjectOn"
+        case "Off":
+            return "ToggleObjectOff"
         case _:
             return "MoveAhead"
 
@@ -144,7 +149,7 @@ ACTION_TYPES = [
     "CookObject",
     "SliceObject",
     "ToggleObjectOn",
-    "ToggleObjectOff"
+    "ToggleObjectOff",
     "DirtyObject",
     "CleanObject",
     "UseUpObject",
@@ -153,4 +158,4 @@ ACTION_TYPES = [
     "UseUpObject"
 ]
 
-ALL_ACTIONS = MOVEMENT_ACTION_TYPES + ACTION_TYPES
+ALL_ACTIONS = ["TASKDONE"] + MOVEMENT_ACTION_TYPES + ACTION_TYPES

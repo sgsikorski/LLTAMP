@@ -62,9 +62,7 @@ State: \u007b
     def mapPosToObjs(self, positions):
         reachableObjects = []
         for obj in self.visibleObjects:
-            pos = obj["position"]
-            for post in positions:
-                if (np.abs(pos["x"]) - np.abs(post["x"]) <= 0.25 and np.abs(pos["z"]) - np.abs(post["z"]) <= 0.25):
-                    reachableObjects.append(obj)
-                    break
+            if (obj["distance"] <= 1.0):
+                reachableObjects.append(obj)
+                break
         return reachableObjects

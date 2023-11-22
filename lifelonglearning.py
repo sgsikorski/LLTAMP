@@ -46,6 +46,9 @@ class Model(Net):
         for transition in Buffer:
             s.append([transition.state.agentX, transition.state.agentY, transition.state.agentZ])
             a.append(utilConstants.ALL_ACTIONS.index(transition.action.actionType))
+        for i in range(300 - len(s)):
+            s.append([0, 0, 0])
+            a.append(0)
         self.observe(torch.tensor(s), t, torch.tensor(a))
 
     def saveModel(self, path='models/trained_agent.pt'):
@@ -72,7 +75,7 @@ def InitialPolicy(state, goalTasks):
     #    mag = np.sign(goalTasks["position"]["x"] - state.agentX)
     #    actionType = "MoveAhead" if mag > 0 else "MoveBack"
     else:
-        choices = 1 # if len(state.reachableObjects) < 0 else 2
+        choices = 1 if len(state.reachableObjects) < 1 else 2
         match(random.randint(0, choices)):
             case 0:
                 # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
@@ -82,8 +85,13 @@ def InitialPolicy(state, goalTasks):
             case 1:
                 actionType = "RotateRight" if random.randint(0, 1) == 0 else "RotateLeft"
             case 2:
-                # Change to randomly pick action of possible actions
-                actionType = "PickupObject"
+                # Random object to interact with
+                objOn = random.choice(state.reachObjName)
+                objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
+                potentialActions = utilConstants.getPotentialActions(objOnProp)
+                actionType = random.choice(utilConstants.MOVEMENT_ACTION_TYPES) if len(potentialActions) < 1 else random.choice(potentialActions)
+                if actionType == 'MoveHeldObject' or actionType in utilConstants.MOVEMENT_ACTION_TYPES:
+                    objOn = None
     action = Action.Action(actionType, objOn, completeGoal)
     return action
 

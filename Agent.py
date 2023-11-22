@@ -4,7 +4,7 @@ import lifelonglearning as ll
 from tqdm import tqdm
 
 class Agent():
-    def __init__(self, environments=[], goalTasks=[], model=None, verbose=False):
+    def __init__(self, environments=[], goalTasks=[], model=None, verbose=False, timeout=100):
         self.Buffer = set()
         self.BufferStream = set()
         self.RRT = set()
@@ -12,6 +12,7 @@ class Agent():
         self.goalTasks = goalTasks
         self.model = model
 
+        self.timeout = timeout
         self.verbose = verbose
 
         self.trainActionAmount = [0] * len(environments)
@@ -39,7 +40,7 @@ class Agent():
 
             # Run this environment actions for 100 seconds
             startTime = time.perf_counter()
-            while(time.perf_counter() - startTime < 100):
+            while(time.perf_counter() - startTime < self.timeout):
                 nTime = time.perf_counter()
                 while (time.perf_counter() - nTime < 0.5):
                     continue
@@ -49,7 +50,10 @@ class Agent():
                 RRT_k.add(transition)
 
                 # Execute action
-                event = controller.step(action.actionType, objectId=action.objectOn) if action.objectOn is not None else controller.step(action.actionType)
+                if action.objectOn is not None:
+                    event = controller.step(action.actionType, objectId=action.objectOn) 
+                else:
+                    event = controller.step(action.actionType)
 
                 if (not event.metadata["lastActionSuccess"]):
                     # Handle an unsuccessful action
@@ -62,13 +66,14 @@ class Agent():
                 # We accomplished the goal, do additional reporting here
                 if (action.completeGoal):
                     print(f"Goal for {environment}_{idx+1} completed!")
-                    controller.step(action="Done")
                     break
                 
                 newState = State.State(controller.last_event.metadata,
                                     controller.step("GetReachablePositions").metadata["actionReturn"])
                 state = newState
                 M_k.add(state)
+            
+            controller.step(action="Done")
             
             # Lifelong Learning Componenet
             self.model.update_theta(self.BufferStream, idx)
@@ -88,7 +93,7 @@ class Agent():
         return
             
     # Let's test the agent in the ai2thor environments
-    def test(self, controller, timeLimit=100):
+    def test(self, controller):
         successRate = 0
         for idx, environment in enumerate(tqdm(self.environments, desc="Testing the model on the environments")):
             numInitActions = 0
@@ -104,7 +109,7 @@ class Agent():
             goal = self.goalTasks[idx]
             
             startTime = time.perf_counter()
-            while(time.perf_counter() - startTime < timeLimit):
+            while(time.perf_counter() - startTime < self.timeout):
                 nTime = time.perf_counter()
                 while (time.perf_counter() - nTime < 1):
                     continue
@@ -138,7 +143,7 @@ class Agent():
                 state = newState
             
             self.testActionAmount[idx] = numInitActions + numThetaActions
-
+            controller.step(action="Done")
             if (self.verbose):
                 print(f"The number of actions taken in environment {environment} is {numInitActions + numThetaActions}.")
                 print(f"The robot failed to do an action {fails} times.")

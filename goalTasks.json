@@ -1,34 +1,31 @@
 [
     {
         "objectId": "Apple|-00.47|+01.15|+00.48",
-        "position": {
-            "x": -0.47,
-            "y": 1.15,
-            "z": 0.48
-        },
         "status": "PickUp"
     },
     {
-        "objectId": "Apple|-00.47|+01.15|+00.48",
-        "position": {
-            "x": -0.47,
-            "y": 1.15,
-            "z": 0.48
-        },
+        "objectId": "Apple|-01.65|+00.81|+00.07",
+        "status": "PickUp"
+    },
+    {
+        "objectId": "Fridge|+01.01|+00.23|+01.92",
+        "status": "Open"
+    },
+    {
+        "objectId": "Apple|-02.48|+01.18|+00.48",
+        "status": "Slice"
+    },
+    {
+        "objectId": "Egg|-00.15|+00.78|-01.94",
+        "status": "Cook"
+    },
+    {
+        "objectId": "Apple|-01.65|+00.81|+00.07",
         "status": "Move",
         "objPosition": {
             "x": -1,
-            "y": 1.15,
-            "z": 0.48
+            "y": 0.81,
+            "z": 0.5
         }
-    },
-    {
-        "objectId": "Fridge|-02.10|+00.00|+01.07",
-        "position": {
-            "x": -1.20,
-            "y": 0.00,
-            "z": 1.07
-        },
-        "status": "Open"
     }
 ]
