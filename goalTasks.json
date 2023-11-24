@@ -8,16 +8,16 @@
         "status": "PickUp"
     },
     {
-        "objectId": "Fridge|+01.01|+00.23|+01.92",
-        "status": "Open"
+        "objectId": "Apple|-01.75|+01.37|-01.16",
+        "status": "Pickup"
     },
     {
         "objectId": "Apple|-02.48|+01.18|+00.48",
-        "status": "Slice"
+        "status": "PickUp"
     },
     {
-        "objectId": "Egg|-00.15|+00.78|-01.94",
-        "status": "Cook"
+        "objectId": "Apple|+01.83|+00.78|-00.65",
+        "status": "PickUp"
     },
     {
         "objectId": "Apple|-01.65|+00.81|+00.07",

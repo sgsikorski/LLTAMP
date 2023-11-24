@@ -1,7 +1,9 @@
 import time
+import torch
 from util import State, Action, Transition, utilConstants
 import lifelonglearning as ll
 from tqdm import tqdm
+import random
 
 class Agent():
     def __init__(self, environments=[], goalTasks=[], model=None, verbose=False, timeout=100):
@@ -115,8 +117,16 @@ class Agent():
                     continue
                 # Determine action
                 a0 = ll.InitialPolicy(state, goal)
-                aHat = utilConstants.ALL_ACTIONS[ll.Model.predict(state)]
-                
+                aHatType = utilConstants.ALL_ACTIONS[self.model.predict(
+                    torch.tensor([[state.agentX, state.agentY, state.agentZ]]))[0].argmax()]
+                if (aHatType == "TASKDONE"):
+                    aHat = Action.Action("Done", None, True)
+                else:
+                    if aHatType in utilConstants.MOVEMENT_ACTION_TYPES:
+                        aHat = Action.Action(aHatType, None, False)
+                    else:
+                        aHat = Action.Action(aHatType, state.chooseFromReach(aHatType), False)
+            
                 # Pick action with better score
                 action = min([a0, aHat], key=lambda a: ll.B(state, a, controller, goal))
                 # Execute action

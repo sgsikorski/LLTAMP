@@ -65,7 +65,7 @@ def main():
         agent.train(controller)
         model.saveModel(args.model_path)
     if args.test:
-        model.loadModel(args.model_path)
+        agent.model.loadModel(args.model_path)
         agent.test(controller)
 
     print("Done!")

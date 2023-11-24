@@ -2,6 +2,8 @@ import numpy as np
 import json
 from dataclasses import dataclass, field
 import torch
+from util import utilConstants
+import random
 
 @dataclass(init = False, repr=False, frozen=False, order=False)
 class State():
@@ -53,8 +55,9 @@ State: \u007b
         return np.sqrt(obj["position"]["x"]**2 + obj["position"]["y"]**2 + obj["position"]["z"]**2)
 
     def getObjDiff(self, otherState):
-        inBoth = list(set(self.visibleObjects).intersection(set(otherState.visibleObjects)))
-        numDiff = 10 * (len(self.visibleObjects) + len(otherState.visibleObjects) - len(inBoth)) 
+        inBoth = list(set(self.visObjName).intersection(set(otherState.visObjName)))
+        numDiff = 10 * (len(self.visibleObjects) + len(otherState.visibleObjects) - len(inBoth))
+        inBoth = [obj for obj in self.visibleObjects if obj["objectId"] in inBoth]
         for obj in inBoth:
             numDiff += self.getObjManhattanDistance(obj) - otherState.getObjManhattanDistance(obj)
         return numDiff
@@ -66,3 +69,10 @@ State: \u007b
                 reachableObjects.append(obj)
                 break
         return reachableObjects
+
+    def chooseFromReach(self, actionType):
+        if (actionType == "MoveHeldObject"):
+            return None
+        toChoose = [obj['objectId'] for obj in self.reachableObjects if actionType in utilConstants.getPotentialActions(obj)]
+        return random.choice(toChoose) if len(toChoose) > 0 else None
+        

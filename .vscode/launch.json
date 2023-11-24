@@ -6,7 +6,23 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/log.txt"],
+        "args": ["--train", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/TrainLog.txt"],
     },
+    {
+        "name": "Test",
+        "type": "python",
+        "request": "launch",
+        "program": "main.py",
+        "console": "integratedTerminal",
+        "args": ["--test", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/TestLog.txt"],
+    },
+    {
+        "name": "Train and Test",
+        "type": "python",
+        "request": "launch",
+        "program": "main.py",
+        "console": "integratedTerminal",
+        "args": ["--train", "--test", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/TestTrainLog.txt"],
+    }
 ]   
 }
