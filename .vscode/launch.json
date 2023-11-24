@@ -6,7 +6,7 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/TrainLog.txt"],
+        "args": ["--train", "-envs", "k", "--timeout", "100", "-v", "-enum", "5", "--epochs", "10", ">", "logs/TrainLog.txt"],
     },
     {
         "name": "Test",

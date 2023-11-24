@@ -19,7 +19,7 @@ class NetInputs():
 
 # pi_theta policy model
 class Model(Net):
-    def __init__(self, input_dim=3):
+    def __init__(self, input_dim=3, n_tasks=30):
         args = NetInputs(n_layers=2, 
                          n_hiddens=100, 
                          lr=0.001, 
@@ -29,7 +29,7 @@ class Model(Net):
         # Update input_dim to map from state to features
         super(Model, self).__init__(n_inputs=input_dim, 
                                     n_outputs=len(utilConstants.ALL_ACTIONS), 
-                                    n_tasks=30, 
+                                    n_tasks=n_tasks, 
                                     args=args)
     
     def getThetaParameter(self):
@@ -64,16 +64,18 @@ def InitialPolicy(state, goalTasks):
     # If goal object is visible, interact with it
         # Will introduce limitations of object that obstruct movement but not vision
     if (goalTasks["objectId"] in state.reachObjName):
-        objOn = goalTasks["objectId"]
-        objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
-        status = goalTasks["status"]
-        if status == "Move":
-            status = "MoveHeld" if objOnProp["pickupable"] else "Push"
-        actionType = utilConstants.determineAction(status)
-        completeGoal = True
-    #elif (goalTasks["objectId"] in state.visObjName):
-    #    mag = np.sign(goalTasks["position"]["x"] - state.agentX)
-    #    actionType = "MoveAhead" if mag > 0 else "MoveBack"
+        ob = [o for o in state.reachableObjects if o['isPickedUp']]
+        if len(ob) > 0:
+            actionType = 'DropHandObject'
+            objOn = ob[0]['objectId']
+        else:    
+            objOn = goalTasks["objectId"]
+            objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
+            status = goalTasks["status"]
+            if status == "Move":
+                status = "MoveHeld" if objOnProp["pickupable"] else "Push"
+            actionType = utilConstants.determineAction(status)
+            completeGoal = True
     else:
         choices = 1 if len(state.reachableObjects) < 1 else 2
         match(random.randint(0, choices)):
