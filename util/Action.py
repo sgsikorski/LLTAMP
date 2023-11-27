@@ -20,6 +20,10 @@ Action: \u007b
                 return "MoveBack"
             case "MoveBack":
                 return "MoveAhead"
+            case "MoveLeft":
+                return "MoveRight"
+            case "MoveRight":
+                return "MoveLeft"
             case "RotateRight":
                 return "RotateLeft"
             case "RotateLeft":

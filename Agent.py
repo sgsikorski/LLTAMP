@@ -102,6 +102,10 @@ class Agent():
             
     # Let's test the agent in the ai2thor environments
     def test(self, controller):
+        # Allow screen recording to be set up
+        stime = time.perf_counter()
+        while(time.perf_counter() - stime < 10):
+            continue
         successRate = 0
         for idx, environment in enumerate(tqdm(self.environments, desc="Testing the model on the environments")):
             numInitActions = 0
@@ -119,7 +123,7 @@ class Agent():
             startTime = time.perf_counter()
             while(time.perf_counter() - startTime < self.timeout):
                 nTime = time.perf_counter()
-                while (time.perf_counter() - nTime < 1):
+                while (time.perf_counter() - nTime < 0.5):
                     continue
                 # Determine action
                 a0 = ll.InitialPolicy(state, goal)

@@ -14,7 +14,7 @@
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",
-        "args": ["--test", "-envs", "k", "--timeout", "15", "-v", "-enum", "5", ">", "logs/TestLog.txt"],
+        "args": ["--test", "-envs", "k", "--timeout", "20", "-v", "-enum", "5", ">", "logs/TestModelLog.txt"],
     },
     {
         "name": "Train and Test",

@@ -3,6 +3,7 @@ import torch
 from GradientEpisodicMemory.model.gem import Net
 import random
 import numpy as np
+import sys
 
 # Threshold for learning. Will need to be fine tuned
 threshold = 0.05
@@ -108,7 +109,7 @@ def difference(state1, state2):
     return diff
 
 def B(s, a, controller, goal):
-    b = "inf"
+    b = sys.maxsize
     if a.actionType in utilConstants.MOVEMENT_ACTION_TYPES:
         event = controller.step(a.actionType)
         if (not event.metadata["lastActionSuccess"]):

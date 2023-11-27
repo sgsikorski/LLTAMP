@@ -27,7 +27,9 @@ def main():
         movementGaussianSigma = 0,
         rotateStepDegress=90,
         rotateGaussianSigma = 0,
-        fieldOfView = 90
+        fieldOfView = 90,
+        width=960,
+        height=1080
     )
 
     # Add which environments we want to conduct over

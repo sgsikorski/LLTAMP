@@ -1,0 +1,1493 @@
+Goal for FloorPlan1_1 completed!
+The number of actions taken in environment FloorPlan1 is 9.
+The robot failed to do an action 0 times.
+The number of actions taken from the initial policy is 9.
+The number of actions taken from the theta policy is 0.
+Transition 0 : 
+State: {
+    "Visible Objects": ['GarbageCan|-01.94|00.00|+02.03'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 1 : 
+State: {
+    "Visible Objects": ['Bread|-00.52|+01.17|-00.03', 'ButterKnife|-00.41|+01.11|-00.46', 'Cabinet|-01.55|+00.50|+00.38', 'Cabinet|-01.85|+02.02|+00.38', 'CoffeeMachine|-01.98|+00.90|-00.19', 'CounterTop|-00.08|+01.15|00.00', 'CounterTop|-01.87|+00.95|-01.21', 'Drawer|-01.56|+00.66|-00.20', 'Drawer|-01.56|+00.84|+00.20', 'Drawer|-01.56|+00.33|-00.20', 'Drawer|-01.56|+00.84|-00.20', 'Floor|+00.00|+00.00|+00.00', 'Toaster|-01.84|+00.90|+00.13'],
+    "Reachable Objects": ['Cabinet|-01.55|+00.50|+00.38'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 2 : 
+State: {
+    "Visible Objects": ['Book|+00.15|+01.10|+00.62', 'CounterTop|-00.08|+01.15|00.00', 'CreditCard|-00.46|+01.10|+00.87', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": ['CreditCard|-00.46|+01.10|+00.87'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 3 : 
+State: {
+    "Visible Objects": ['Apple|-00.47|+01.15|+00.48', 'Bread|-00.52|+01.17|-00.03', 'Cabinet|-01.55|+00.50|+00.38', 'Cabinet|-01.85|+02.02|+00.38', 'CoffeeMachine|-01.98|+00.90|-00.19', 'CounterTop|-00.08|+01.15|00.00', 'CounterTop|-01.87|+00.95|-01.21', 'Drawer|-01.56|+00.66|-00.20', 'Drawer|-01.56|+00.84|+00.20', 'Drawer|-01.56|+00.33|-00.20', 'Drawer|-01.56|+00.84|-00.20', 'Floor|+00.00|+00.00|+00.00', 'Toaster|-01.84|+00.90|+00.13'],
+    "Reachable Objects": ['Apple|-00.47|+01.15|+00.48'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: PickupObject, 
+    Object: Apple|-00.47|+01.15|+00.48, 
+    Goal Complete: True
+}
+Transition 4 : 
+State: {
+    "Visible Objects": ['Book|+00.15|+01.10|+00.62', 'CounterTop|-00.08|+01.15|00.00', 'CreditCard|-00.46|+01.10|+00.87', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": ['CreditCard|-00.46|+01.10|+00.87'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 5 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.85|+02.02|+00.38', 'Fridge|-02.10|+00.00|+01.07', 'Toaster|-01.84|+00.90|+00.13'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 6 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.85|+02.02|+00.38', 'Fridge|-02.10|+00.00|+01.07', 'Toaster|-01.84|+00.90|+00.13'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 7 : 
+State: {
+    "Visible Objects": ['Bread|-00.52|+01.17|-00.03', 'ButterKnife|-00.41|+01.11|-00.46', 'Cabinet|-01.55|+00.50|+00.38', 'Cabinet|-01.85|+02.02|+00.38', 'CoffeeMachine|-01.98|+00.90|-00.19', 'CounterTop|-00.08|+01.15|00.00', 'CounterTop|-01.87|+00.95|-01.21', 'Drawer|-01.56|+00.66|-00.20', 'Drawer|-01.56|+00.84|+00.20', 'Drawer|-01.56|+00.33|-00.20', 'Drawer|-01.56|+00.84|-00.20', 'Floor|+00.00|+00.00|+00.00', 'Toaster|-01.84|+00.90|+00.13'],
+    "Reachable Objects": ['Cabinet|-01.55|+00.50|+00.38'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 8 : 
+State: {
+    "Visible Objects": ['GarbageCan|-01.94|00.00|+02.03'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.900999128818512,
+        "z": 1.0
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+The number of actions taken in environment FloorPlan2 is 26.
+The robot failed to do an action 2 times.
+The number of actions taken from the initial policy is 26.
+The number of actions taken from the theta policy is 0.
+Transition 0 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": ['Potato|+00.33|+00.94|+01.31'],
+    "Agent": { 
+        "x": -0.5,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 1 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 2 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_0', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_1', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_2', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_3', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_4', 'Potato|+00.33|+00.94|+01.31|PotatoSliced_5'],
+    "Reachable Objects": ['Potato|+00.33|+00.94|+01.31|PotatoSliced_0'],
+    "Agent": { 
+        "x": -0.5,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 3 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'Chair|00.00|+00.00|+01.24', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 4 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.25,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 5 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 6 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'Chair|00.00|+00.00|+01.24', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 7 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'GarbageCan|-01.80|+00.01|+01.33'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 8 : 
+State: {
+    "Visible Objects": ['CellPhone|-00.31|+00.92|+01.29', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": ['CellPhone|-00.31|+00.92|+01.29'],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.9009992480278015,
+        "z": 2.0
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 9 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 10 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 11 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 12 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 13 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 14 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'GarbageCan|-01.80|+00.01|+01.33'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 15 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": ['Potato|+00.33|+00.94|+01.31'],
+    "Agent": { 
+        "x": -0.5,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 16 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'Chair|00.00|+00.00|+01.24', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 17 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 18 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": ['Bowl|+00.28|+00.92|+01.09'],
+    "Agent": { 
+        "x": -0.25,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 19 : 
+State: {
+    "Visible Objects": ['Bowl|+00.28|+00.92|+01.09', 'CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Potato|+00.33|+00.94|+01.31'],
+    "Reachable Objects": ['Potato|+00.33|+00.94|+01.31'],
+    "Agent": { 
+        "x": -0.5,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: SliceObject, 
+    Object: Potato|+00.33|+00.94|+01.31, 
+    Goal Complete: False
+}
+Transition 20 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 0.9009992480278015,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 21 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.75,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 22 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.02|+00.96|+00.51', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-01.76|+00.00|00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.0,
+        "y": 0.9009992480278015,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+The number of actions taken in environment FloorPlan3 is 28.
+The robot failed to do an action 0 times.
+The number of actions taken from the initial policy is 19.
+The number of actions taken from the theta policy is 9.
+Transition 0 : 
+State: {
+    "Visible Objects": ['Apple|-01.75|+01.37|-01.16', 'Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Egg|-01.57|+01.36|-01.05', 'Lettuce|-01.89|+01.40|-01.07', 'Pot|-01.58|+01.31|-01.58', 'Potato|-01.61|+01.36|-01.24', 'Sink|-01.99|+01.14|-00.98', 'Toaster|-01.89|+01.31|-02.51'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 1 : 
+State: {
+    "Visible Objects": ['CoffeeMachine|+01.13|+01.31|-01.43', 'CounterTop|-01.81|+01.36|+01.18', 'Knife|+00.72|+01.32|-02.20', 'Microwave|+00.99|+01.31|-02.16', 'Spoon|+00.61|+01.32|-02.36', 'WineBottle|+00.96|+01.31|-01.01'],
+    "Reachable Objects": ['Knife|+00.72|+01.32|-02.20'],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 2 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Fork|+00.62|+01.31|-02.48', 'PepperShaker|+00.47|+01.31|-03.00', 'SaltShaker|+00.33|+01.31|-02.83', 'Spoon|+00.61|+01.32|-02.36', 'StoveBurner|-00.13|+01.33|-02.97', 'StoveBurner|-00.75|+01.33|-02.97', 'StoveBurner|-00.63|+01.33|-03.30', 'StoveBurner|-00.24|+01.33|-03.30', 'StoveKnob|-00.71|+01.34|-02.74', 'StoveKnob|-00.57|+01.34|-02.74', 'StoveKnob|-00.34|+01.34|-02.74', 'StoveKnob|-00.19|+01.34|-02.74'],
+    "Reachable Objects": ['Fork|+00.62|+01.31|-02.48'],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 3 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Cup|+00.68|+01.31|-00.90', 'Floor|+00.00|+00.22|-00.82', 'Stool|+00.61|+00.22|-01.08'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 4 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Cup|+00.68|+01.31|-00.90', 'Floor|+00.00|+00.22|-00.82'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 5 : 
+State: {
+    "Visible Objects": ['Cabinet|+00.58|+00.78|-02.05', 'CoffeeMachine|+01.13|+01.31|-01.43', 'CounterTop|-01.81|+01.36|+01.18', 'Floor|+00.00|+00.22|-00.82', 'Fork|+00.62|+01.31|-02.48', 'Knife|+00.72|+01.32|-02.20', 'Microwave|+00.99|+01.31|-02.16', 'Spoon|+00.61|+01.32|-02.36', 'Stool|+00.61|+00.22|-01.08'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 6 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Floor|+00.00|+00.22|-00.82', 'Sink|-01.99|+01.14|-00.98', 'Stool|+00.61|+00.22|-01.08'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 7 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Pot|-01.58|+01.31|-01.58'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 8 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Pot|-01.58|+01.31|-01.58'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 9 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-00.43', 'Floor|+00.00|+00.22|-00.82', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 10 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Floor|+00.00|+00.22|-00.82', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 11 : 
+State: {
+    "Visible Objects": ['Cabinet|+00.58|+00.78|-02.05', 'CoffeeMachine|+01.13|+01.31|-01.43', 'CounterTop|-01.81|+01.36|+01.18', 'Fork|+00.62|+01.31|-02.48', 'Knife|+00.72|+01.32|-02.20', 'Microwave|+00.99|+01.31|-02.16', 'Spoon|+00.61|+01.32|-02.36'],
+    "Reachable Objects": ['Cabinet|+00.58|+00.78|-02.05'],
+    "Agent": { 
+        "x": -0.25,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 12 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Cup|+00.68|+01.31|-00.90', 'Floor|+00.00|+00.22|-00.82'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 13 : 
+State: {
+    "Visible Objects": ['Cabinet|+00.58|+00.78|-02.05', 'CoffeeMachine|+01.13|+01.31|-01.43', 'CounterTop|-01.81|+01.36|+01.18', 'Floor|+00.00|+00.22|-00.82', 'Fork|+00.62|+01.31|-02.48', 'Knife|+00.72|+01.32|-02.20', 'Microwave|+00.99|+01.31|-02.16', 'Spoon|+00.61|+01.32|-02.36', 'Stool|+00.61|+00.22|-01.08'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 14 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Pot|-01.58|+01.31|-01.58'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 15 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Fork|+00.62|+01.31|-02.48', 'PepperShaker|+00.47|+01.31|-03.00', 'SaltShaker|+00.33|+01.31|-02.83', 'Spoon|+00.61|+01.32|-02.36', 'StoveBurner|-00.13|+01.33|-02.97', 'StoveBurner|-00.75|+01.33|-02.97', 'StoveBurner|-00.63|+01.33|-03.30', 'StoveBurner|-00.24|+01.33|-03.30', 'StoveKnob|-00.71|+01.34|-02.74', 'StoveKnob|-00.57|+01.34|-02.74', 'StoveKnob|-00.34|+01.34|-02.74', 'StoveKnob|-00.19|+01.34|-02.74'],
+    "Reachable Objects": ['Fork|+00.62|+01.31|-02.48'],
+    "Agent": { 
+        "x": 0.0,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 16 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Egg|-01.57|+01.36|-01.05', 'Pot|-01.58|+01.31|-01.58', 'Potato|-01.61|+01.36|-01.24', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 17 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Floor|+00.00|+00.22|-00.82', 'Sink|-01.99|+01.14|-00.98', 'Stool|+00.61|+00.22|-01.08'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -2.0
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 18 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Egg|-01.57|+01.36|-01.05', 'Pot|-01.58|+01.31|-01.58', 'Potato|-01.61|+01.36|-01.24', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 19 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.46|+00.78|-02.00', 'CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-01.22', 'Egg|-01.57|+01.36|-01.05', 'Pot|-01.58|+01.31|-01.58', 'Potato|-01.61|+01.36|-01.24', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.25,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 20 : 
+State: {
+    "Visible Objects": ['CounterTop|-01.81|+01.36|+01.18', 'Drawer|-01.61|+00.68|-00.43', 'Floor|+00.00|+00.22|-00.82', 'Sink|-01.99|+01.14|-00.98'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -0.5,
+        "y": 1.123205542564392,
+        "z": -1.75
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+The number of actions taken in environment FloorPlan4 is 27.
+The robot failed to do an action 0 times.
+The number of actions taken from the initial policy is 27.
+The number of actions taken from the theta policy is 0.
+Transition 0 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'Bread|-00.18|+01.12|+01.89', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Fork|-00.46|+01.04|+01.78', 'Spoon|-00.43|+01.04|+01.90', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 1 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-03.16|+01.05|+00.71', 'StoveKnob|-02.99|+01.05|+00.71', 'StoveKnob|-03.32|+01.05|+00.71', 'Window|-03.27|+01.93|+00.02'],
+    "Reachable Objects": ['ButterKnife|-02.63|+01.11|+00.60'],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 2 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Cup|-01.58|+00.92|+00.34', 'DishSponge|-01.12|+01.15|+00.09', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Faucet|-01.37|+01.14|+00.13', 'HousePlant|-02.16|+01.10|+00.17', 'Knife|-01.48|+00.93|+00.42', 'Ladle|-01.95|+01.14|+00.45', 'Microwave|-00.37|+01.11|+00.43', 'Plate|-01.19|+00.92|+00.40', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin', 'SoapBottle|-00.89|+01.11|+00.19', 'Spatula|-00.81|+01.12|+00.53', 'Window|-01.39|+01.93|+00.02'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 3 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'Bread|-00.18|+01.12|+01.89', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Fork|-00.46|+01.04|+01.78', 'Microwave|-00.37|+01.11|+00.43', 'Pan|-00.27|+01.04|+02.56', 'Spoon|-00.43|+01.04|+01.90', 'Toaster|-00.23|+01.04|+02.87', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 4 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.73|+00.39|+00.73', 'Cabinet|-01.00|+00.39|+00.73', 'CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Cup|-01.58|+00.92|+00.34', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Drawer|-02.51|+00.94|+00.60', 'Faucet|-01.37|+01.14|+00.13', 'HousePlant|-02.16|+01.10|+00.17', 'Ladle|-01.95|+01.14|+00.45', 'Microwave|-00.37|+01.11|+00.43', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin', 'Spatula|-00.81|+01.12|+00.53'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 5 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-03.16|+01.05|+00.71', 'StoveKnob|-02.99|+01.05|+00.71', 'StoveKnob|-03.32|+01.05|+00.71', 'Window|-03.27|+01.93|+00.02'],
+    "Reachable Objects": ['ButterKnife|-02.63|+01.11|+00.60'],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 6 : 
+State: {
+    "Visible Objects": ['DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 7 : 
+State: {
+    "Visible Objects": ['DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 8 : 
+State: {
+    "Visible Objects": ['DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 9 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-02.99|+01.05|+00.71'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 10 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.73|+00.39|+00.73', 'Cabinet|-01.00|+00.39|+00.73', 'CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Cup|-01.58|+00.92|+00.34', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Drawer|-02.51|+00.94|+00.60', 'Faucet|-01.37|+01.14|+00.13', 'HousePlant|-02.16|+01.10|+00.17', 'Ladle|-01.95|+01.14|+00.45', 'Microwave|-00.37|+01.11|+00.43', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin', 'Spatula|-00.81|+01.12|+00.53'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 11 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.73|+00.39|+00.73', 'Cabinet|-01.00|+00.39|+00.73', 'CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.50|+00.22|+00.59', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.22|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Drawer|-02.51|+00.94|+00.60', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 2.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 12 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 13 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.50|+00.22|+00.59', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 14 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'Bread|-00.18|+01.12|+01.89', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Fork|-00.46|+01.04|+01.78', 'Microwave|-00.37|+01.11|+00.43', 'Pan|-00.27|+01.04|+02.56', 'Spoon|-00.43|+01.04|+01.90', 'Toaster|-00.23|+01.04|+02.87', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.75
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 15 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.00|+01.10|+00.23', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-03.16|+01.05|+00.71', 'StoveKnob|-02.99|+01.05|+00.71'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 16 : 
+State: {
+    "Visible Objects": ['CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Cup|-01.58|+00.92|+00.34', 'DishSponge|-01.12|+01.15|+00.09', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Faucet|-01.37|+01.14|+00.13', 'HousePlant|-02.16|+01.10|+00.17', 'Knife|-01.48|+00.93|+00.42', 'Ladle|-01.95|+01.14|+00.45', 'Microwave|-00.37|+01.11|+00.43', 'Plate|-01.19|+00.92|+00.40', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin', 'SoapBottle|-00.89|+01.11|+00.19', 'Spatula|-00.81|+01.12|+00.53', 'Window|-01.39|+01.93|+00.02'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 17 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'GarbageCan|-03.70|+00.00|+02.01', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-03.16|+01.05|+00.71', 'StoveKnob|-02.99|+01.05|+00.71', 'StoveKnob|-03.32|+01.05|+00.71'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 18 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'Bread|-00.18|+01.12|+01.89', 'CoffeeMachine|-00.15|+01.04|+03.19', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Fork|-00.46|+01.04|+01.78', 'Pan|-00.27|+01.04|+02.56', 'Spoon|-00.43|+01.04|+01.90', 'Toaster|-00.23|+01.04|+02.87', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": ['Tomato|-00.75|+01.08|+02.40'],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 2.0
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 19 : 
+State: {
+    "Visible Objects": ['DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Tomato|-00.75|+01.08|+02.40'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 20 : 
+State: {
+    "Visible Objects": ['ButterKnife|-02.63|+01.11|+00.60', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.51|+00.94|+00.60', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveKnob|-02.99|+01.05|+00.71'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.75,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 21 : 
+State: {
+    "Visible Objects": ['Bowl|-00.50|+01.04|+02.22', 'Bread|-00.18|+01.12|+01.89', 'CounterTop|-00.52|+01.16|+00.49', 'DiningTable|-00.62|+00.02|+02.49', 'Fork|-00.46|+01.04|+01.78', 'Microwave|-00.37|+01.11|+00.43', 'Pan|-00.27|+01.04|+02.56', 'Spoon|-00.43|+01.04|+01.90'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 22 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72', 'GarbageCan|-03.70|+00.00|+02.01', 'Pot|-03.00|+01.14|+00.48', 'StoveBurner|-03.48|+01.10|+00.23', 'StoveBurner|-03.00|+01.10|+00.48', 'StoveBurner|-03.48|+01.10|+00.48', 'StoveKnob|-03.16|+01.05|+00.71', 'StoveKnob|-03.49|+01.05|+00.71', 'StoveKnob|-02.99|+01.05|+00.71', 'StoveKnob|-03.32|+01.05|+00.71', 'Window|-03.27|+01.93|+00.02'],
+    "Reachable Objects": ['StoveKnob|-02.99|+01.05|+00.71'],
+    "Agent": { 
+        "x": -2.25,
+        "y": 0.9009998440742493,
+        "z": 1.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 23 : 
+State: {
+    "Visible Objects": ['DiningTable|-00.62|+00.02|+02.49', 'Floor|+00.00|+00.00|+00.00', 'Fridge|-03.52|+00.00|+02.72'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -2.0,
+        "y": 0.9009998440742493,
+        "z": 1.5
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 24 : 
+State: {
+    "Visible Objects": ['Cabinet|-01.73|+00.39|+00.73', 'Cabinet|-01.00|+00.39|+00.73', 'CounterTop|-00.52|+01.16|+00.49', 'CounterTop|-02.28|+01.16|+00.38', 'Drawer|-02.50|+00.61|+00.59', 'Drawer|-02.50|+00.22|+00.59', 'Drawer|-02.04|+00.61|+00.59', 'Drawer|-02.04|+00.22|+00.59', 'Drawer|-02.04|+00.94|+00.60', 'Drawer|-02.51|+00.94|+00.60', 'Sink|-01.39|+00.98|+00.44', 'Sink|-01.39|+00.98|+00.44|SinkBasin'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": -1.5,
+        "y": 0.9009998440742493,
+        "z": 2.0
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+The number of actions taken in environment FloorPlan5 is 20.
+The robot failed to do an action 9 times.
+The number of actions taken from the initial policy is 20.
+The number of actions taken from the theta policy is 0.
+Transition 0 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.68|+00.89|+00.17', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.5,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 1 : 
+State: {
+    "Visible Objects": ['Cabinet|+01.39|+00.47|-01.06', 'CounterTop|+01.16|+00.95|-02.01', 'Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 2 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'GarbageCan|+01.92|-00.01|+00.14', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 3 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Knife|+00.06|+00.91|+00.18'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.0
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 4 : 
+State: {
+    "Visible Objects": ['Cabinet|+01.39|+00.47|-01.06', 'CounterTop|+01.16|+00.95|-02.01', 'Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 5 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.68|+00.89|+00.17', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.25,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 6 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.68|+00.89|+00.17', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.25,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 7 : 
+State: {
+    "Visible Objects": ['Cabinet|+01.75|+02.02|-01.03', 'Cabinet|+01.39|+00.47|-01.06', 'CounterTop|+01.16|+00.95|-02.01', 'Floor|+00.00|+00.00|+00.00', 'Microwave|+01.83|+00.90|-01.35'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.0
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 8 : 
+State: {
+    "Visible Objects": ['Bowl|-00.51|+01.12|+00.54', 'CounterTop|+01.16|+00.95|-02.01', 'CounterTop|-00.67|+00.95|+00.19', 'CounterTop|-00.63|+01.17|+00.57', 'Floor|+00.00|+00.00|+00.00', 'Knife|+00.06|+00.91|+00.18', 'Mug|+00.13|+01.12|+00.57', 'Spoon|-00.06|+00.90|+00.10', 'Stool|-00.13|+00.01|+00.88'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: PickupObject, 
+    Object: Knife|+00.06|+00.91|+00.18, 
+    Goal Complete: False
+}
+Transition 9 : 
+State: {
+    "Visible Objects": ['Cabinet|+01.75|+02.02|-01.03', 'Cabinet|+01.39|+00.47|-01.06', 'CounterTop|+01.16|+00.95|-02.01', 'Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Microwave|+01.83|+00.90|-01.35'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 10 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Knife|+00.06|+00.91|+00.18'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.25,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 11 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54'],
+    "Reachable Objects": [],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.5
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 12 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.68|+00.89|+00.17', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.25,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 13 : 
+State: {
+    "Visible Objects": ['Bowl|-00.51|+01.12|+00.54', 'ButterKnife|-00.70|+00.90|+00.11', 'CounterTop|-00.67|+00.95|+00.19', 'CounterTop|-00.63|+01.17|+00.57', 'Floor|+00.00|+00.00|+00.00', 'Fork|-00.75|+00.90|+00.12', 'Knife|+00.06|+00.91|+00.18', 'Mug|+00.13|+01.12|+00.57', 'Spoon|-00.06|+00.90|+00.10'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 14 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'GarbageCan|+01.92|-00.01|+00.14', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateRight, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 15 : 
+State: {
+    "Visible Objects": ['Bowl|-00.51|+01.12|+00.54', 'CounterTop|+01.16|+00.95|-02.01', 'CounterTop|-00.67|+00.95|+00.19', 'CounterTop|-00.63|+01.17|+00.57', 'Floor|+00.00|+00.00|+00.00', 'Knife|+00.06|+00.91|+00.18', 'Mug|+00.13|+01.12|+00.57', 'Spoon|-00.06|+00.90|+00.10', 'Stool|-00.13|+00.01|+00.88'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 16 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Knife|+00.06|+00.91|+00.18'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveBack, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 17 : 
+State: {
+    "Visible Objects": ['Bowl|-00.51|+01.12|+00.54', 'ButterKnife|-00.70|+00.90|+00.11', 'CounterTop|+01.16|+00.95|-02.01', 'CounterTop|-00.67|+00.95|+00.19', 'CounterTop|-00.63|+01.17|+00.57', 'Fork|-00.75|+00.90|+00.12', 'Knife|+00.06|+00.91|+00.18', 'Mug|+00.13|+01.12|+00.57', 'Spoon|-00.06|+00.90|+00.10'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 0.75,
+        "y": 0.9009991884231567,
+        "z": 0.0
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 18 : 
+State: {
+    "Visible Objects": ['Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'GarbageCan|+01.92|-00.01|+00.14', 'Knife|+00.06|+00.91|+00.18', 'Shelf|+02.76|+00.88|+00.14', 'Shelf|+02.76|+00.55|+00.15', 'ShelvingUnit|+02.76|+00.01|+00.15', 'Vase|+02.54|+00.56|+00.21'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: MoveAhead, 
+    Object: None, 
+    Goal Complete: False
+}
+Transition 19 : 
+State: {
+    "Visible Objects": ['Cabinet|+01.75|+02.02|-01.03', 'Cabinet|+01.39|+00.47|-01.06', 'CounterTop|+01.16|+00.95|-02.01', 'Floor|+00.00|+00.00|+00.00', 'Fridge|+01.98|+00.00|-00.54', 'Knife|+00.06|+00.91|+00.18', 'Microwave|+01.83|+00.90|-01.35'],
+    "Reachable Objects": ['Knife|+00.06|+00.91|+00.18'],
+    "Agent": { 
+        "x": 1.0,
+        "y": 0.9009991884231567,
+        "z": 0.25
+    }
+}
+Action: {
+    ActionType: RotateLeft, 
+    Object: None, 
+    Goal Complete: False
+}
+There was a 0.2 success rate.
+Done!

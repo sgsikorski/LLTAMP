@@ -6,3 +6,5 @@ __pycache__/*
 util/__pycache__/*
 .DS_Store
 LLfTC.pptx
+*.mov
+*.mp4
