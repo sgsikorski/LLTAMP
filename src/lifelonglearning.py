@@ -5,8 +5,30 @@ import random
 import numpy as np
 import sys
 
-# Threshold for learning. Will need to be fine tuned
-threshold = 0.05
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+
+class DQN(nn.Module):
+    def __init__(self, input_dim, n_actions):
+        super(DQN, self).__init__()
+        self.fc1 = nn.Linear(input_dim, 32)
+        self.fc2 = nn.Linear(32, 64)
+        self.fc3 = nn.Linear(64, 64)
+        self.fc4 = nn.Linear(64, n_actions)
+    
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        return self.fc4(x)
+
+    def Q(self, state, action):
+        return self.forward(state)[action]
+
+    def maxQ(self, state):
+        return torch.argmax(self.forward(state))
 
 class NetInputs():
     def __init__(self, n_layers, n_hiddens, lr, cuda, n_memories, memory_strength):
@@ -57,7 +79,7 @@ class Model(Net):
     
     def loadModel(self, path='models/trained_agent.pt'):
         self.net.load_state_dict(torch.load(path))
-
+'''
 # Sampling based policy
 def InitialPolicy(state, goalTasks):
     objOn = None
@@ -125,3 +147,4 @@ def B(s, a, controller, goal):
         if (goal["objectId"] in s.reachObjName):
             return 0
     return b
+'''

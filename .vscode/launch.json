@@ -2,15 +2,15 @@
 "configurations": [
     {
         "name": "Train",
-        "type": "python",
+        "type": "debugpy",
         "request": "launch",
-        "program": "main.py",
+        "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-envs", "k", "--timeout", "100", "-v", "-enum", "5", "--epochs", "10", ">", "logs/TrainLog.txt"],
+        "args": ["--train", "-gp", "src/env/goalTasks.json", "-envs", "k", "--timeout", "100", "-v", "-enum", "3", "--epochs", "10"],
     },
     {
         "name": "Test",
-        "type": "python",
+        "type": "debugpy",
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",
@@ -18,7 +18,7 @@
     },
     {
         "name": "Train and Test",
-        "type": "python",
+        "type": "debugpy",
         "request": "launch",
         "program": "main.py",
         "console": "integratedTerminal",

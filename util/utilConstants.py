@@ -5,9 +5,10 @@ def getPotentialActions(obj):
     potentialActions = []
     if (obj['pickupable']):
         potentialActions.append("PickupObject")
-        potentialActions.append("PutObject")
+        #potentialActions.append("PutObject")
+        #if obj['moveable']:
+        #    potentialActions.append("MoveHeldObject")
     if (obj['moveable']):
-        potentialActions.append("MoveHeldObject")
         potentialActions.append("PushObject")
     if (obj['breakable']):
         potentialActions.append("BreakObject")
@@ -67,70 +68,53 @@ def determineAction(status):
 
 GRIDSIZE = 0.25
 
-# Possible goal objects
-TARGET_OBJECT_TYPES = [
-    "AlarmClock,"
-    "Apple,"
-    "BaseballBat,"
-    "BasketBall,"
-    "Bowl,"
-    "GarbageCan,"
-    "HousePlant,"
-    "Laptop,"
-    "Mug,"
-    "RemoteControl,"
-    "SprayBottle,"
-    "Television,"
-    "Vase"
-]
-
-# All possible objects in scenes
-BACKGROUND_OBJECT_TYPES = [
-    "ArmChair",
-    "Bed",
-    "Book",
-    "Bottle",
-    "Box",
+# Objects that show up in all kitchen scenes. We can do one-hot encoding for these
+OBJECT_TYPES = [
+    "Apple",
+    "AppleSliced",
+    "Bowl",
+    "Bread",
+    "BreadSliced",
     "ButterKnife",
-    "Candle",
-    "CD",
-    "CellPhone",
-    "Chair",
-    "CoffeeTable",
+    "Cabinet",
+    "CoffeeMachine",
+    "CounterTop",
     "Cup",
-    "DeskLamp",
-    "Desk",
-    "DiningTable",
-    "Drawer",
-    "Dresser",
-    "FloorLamp",
+    "DishSponge",
+    "Egg",
+    "EggCracked",
+    "Faucet",
+    "Floor",
     "Fork",
-    "Newspaper",
-    "Painting",
-    "Pencil",
-    "Pen",
+    "Fridge",
+    "GarbageCan",
+    "Knife",
+    "Lettuce",
+    "LettuceSliced",
+    "LightSwitch",
+    "Microwave",
+    "Mug",
+    "Pan",
     "PepperShaker",
-    "Pillow",
     "Plate",
     "Pot",
+    "Potato",
+    "PotatoSliced",
     "SaltShaker",
-    "Shelf",
-    "SideTable",
-    "Sofa",
-    "Statue",
-    "TeddyBear",
-    "TennisRacket",
-    "TVStand",
-    "Watch"
+    "Sink",
+    "SinkBasin",
+    "SoapBottle",
+    "Spatula",
+    "Spoon",
+    "StoveBurner",
+    "StoveKnob",
+    "Toaster",
+    "Tomato",
+    "TomatoSliced",
 ]
-
-ALL_OBJECT_TYPES = TARGET_OBJECT_TYPES + BACKGROUND_OBJECT_TYPES
 
 MOVEMENT_ACTION_TYPES = [
     "MoveAhead",
-    "MoveBack",
-    "MoveLeft",
-    "MoveRight",
     "RotateRight",
     "RotateLeft"
 ]

@@ -1,5 +1,10 @@
+import sys 
+import os
+import math
+
 from ai2thor.controller import Controller
-from util import utilConstants
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir)))
+from util import utilConstants as uc
 import lifelonglearning as ll
 import json
 import argparse
@@ -18,12 +23,11 @@ def main():
     parser.add_argument("-e", "--epochs", type=int, default=5, help="Number of epochs to train the model")
     args = parser.parse_args()
 
-    model = ll.Model(input_dim=3, n_tasks=args.enum)
     controller = Controller(
         agentMode = "default",
         visibilityDistance=1.5,
         scene="FloorPlan1",
-        gridSize=utilConstants.GRIDSIZE,
+        gridSize=uc.GRIDSIZE,
         movementGaussianSigma = 0,
         rotateStepDegress=90,
         rotateGaussianSigma = 0,
@@ -31,6 +35,9 @@ def main():
         width=960,
         height=1080
     )
+
+    # input_dim: agent position + one-hot encoding of interactable objects
+    model = ll.Model(input_dim=3+len(uc.OBJECT_TYPES), n_tasks=args.enum)
 
     # Add which environments we want to conduct over
     environments = []

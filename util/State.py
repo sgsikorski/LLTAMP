@@ -73,6 +73,37 @@ State: \u007b
     def chooseFromReach(self, actionType):
         if (actionType == "MoveHeldObject"):
             return None
+        if (actionType in utilConstants.MOVEMENT_ACTION_TYPES):
+            return None
         toChoose = [obj['objectId'] for obj in self.reachableObjects if actionType in utilConstants.getPotentialActions(obj)]
         return random.choice(toChoose) if len(toChoose) > 0 else None
+
+    def getPossibleActions(self):
+        acts = []
+        for o in self.reachableObjects:
+            acts += utilConstants.getPotentialActions(o)
+        return list(set(acts)) + utilConstants.MOVEMENT_ACTION_TYPES
+
+    # This is really not a one-hot encoding as we have floats in the agent's position and the distance of the object
+    def getOneHotEncoding(self):
+        oneHot = [self.agentX, self.agentY, self.agentZ]
+        oneHot += [0] * len(utilConstants.OBJECT_TYPES)
+        for obj in self.visibleObjects:
+            # If the object is not in the object types, we skip it
+            if obj not in utilConstants.OBJECT_TYPES:
+                continue
+            if obj in self.reachableObjects:
+                oneHot[utilConstants.OBJECT_TYPES.index(obj['objectType'])] = 1
+            else:
+                oneHot[utilConstants.OBJECT_TYPES.index(obj['objectType'])] = 1. / obj['distance']
+        return oneHot
+
+    def getReward(self, goal):
+        if not self.envMD["lastActionSuccess"]:
+            return -1
+        if goal['objectId'] in self.reachObjName:
+            return 1
+        if goal['objectId'] in self.visObjName:
+            return 0.5
+        return 0
         
