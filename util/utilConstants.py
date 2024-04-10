@@ -5,13 +5,14 @@ def getPotentialActions(obj):
     potentialActions = []
     if (obj['pickupable']):
         potentialActions.append("PickupObject")
+        potentialActions.append("DropHandObject")
         #potentialActions.append("PutObject")
         #if obj['moveable']:
         #    potentialActions.append("MoveHeldObject")
     if (obj['moveable']):
         potentialActions.append("PushObject")
-    if (obj['breakable']):
-        potentialActions.append("BreakObject")
+    #if (obj['breakable']):
+    #    potentialActions.append("BreakObject")
     if (obj['openable']):
         potentialActions.append("OpenObject")
         potentialActions.append("CloseObject")
@@ -19,10 +20,10 @@ def getPotentialActions(obj):
         potentialActions.append("UseUpObject")
     if (obj['canFillWithLiquid']):
         potentialActions.append("FillObjectWithLiquid")
-    if (obj['cookable']):
-        potentialActions.append("CookObject")
-    if (obj['sliceable']):
-        potentialActions.append("SliceObject")
+    #if (obj['cookable']):
+    #    potentialActions.append("CookObject")
+    #if (obj['sliceable']):
+    #    potentialActions.append("SliceObject")
     if (obj['dirtyable']):
         potentialActions.append("DirtyObject")
         potentialActions.append("CleanObject")
@@ -41,12 +42,12 @@ def determineAction(status):
             return "PickupObject"
         case "Put":
             return "PutObject"
-        case "Break":
-            return "BreakObject"
-        case "Cook":
-            return "CookObject"
-        case "Slice":
-            return "SliceObject"
+        #case "Break":
+        #    return "BreakObject"
+        #case "Cook":
+        #    return "CookObject"
+        #case "Slice":
+        #    return "SliceObject"
         case "Dirty":
             return "DirtyObject"
         case "Clean":
@@ -129,9 +130,9 @@ ACTION_TYPES = [
     "PullObject",
     "OpenObject",
     "CloseObject",
-    "BreakObject",
+    #"BreakObject",
     "CookObject",
-    "SliceObject",
+    #"SliceObject",
     "ToggleObjectOn",
     "ToggleObjectOff",
     "DirtyObject",

@@ -65,13 +65,13 @@ State: \u007b
     def mapPosToObjs(self, positions):
         reachableObjects = []
         for obj in self.visibleObjects:
-            if (obj["distance"] <= 1.0):
+            if (obj["distance"] <= 1.75):
                 reachableObjects.append(obj)
                 break
         return reachableObjects
 
     def chooseFromReach(self, actionType):
-        if (actionType == "MoveHeldObject"):
+        if actionType == "MoveHeldObject" or actionType == "DropHandObject":
             return None
         if (actionType in utilConstants.MOVEMENT_ACTION_TYPES):
             return None

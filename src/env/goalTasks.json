@@ -4,28 +4,19 @@
         "status": "PickUp"
     },
     {
-        "objectId": "Apple|-01.65|+00.81|+00.07",
+        "objectId": "LightSwitch|-00.15|+01.29|+03.70",
+        "status": "On"
+    },
+    {
+        "objectId": "SaltShaker|+00.33|+01.31|-02.83",
         "status": "PickUp"
     },
     {
-        "objectId": "Apple|-01.75|+01.37|-01.16",
-        "status": "Pickup"
+        "objectId": "Fridge|-03.52|+00.00|+02.72",
+        "status": "Open"
     },
     {
-        "objectId": "Apple|-02.48|+01.18|+00.48",
+        "objectId": "Egg|-00.15|+00.78|-01.94",
         "status": "PickUp"
-    },
-    {
-        "objectId": "Apple|+01.83|+00.78|-00.65",
-        "status": "PickUp"
-    },
-    {
-        "objectId": "Apple|-01.65|+00.81|+00.07",
-        "status": "Move",
-        "objPosition": {
-            "x": -1,
-            "y": 0.81,
-            "z": 0.5
-        }
     }
 ]

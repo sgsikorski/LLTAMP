@@ -8,6 +8,9 @@ from tqdm import tqdm
 import random
 import math
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 # ===================================
 #  Hyperparameters
 # ===================================
@@ -15,10 +18,10 @@ BATCH_SIZE = 64
 GAMMA = 0.99
 EPS_START = 0.9
 EPS_END = 0.003
-EPS_DECAY = 1000
+EPS_DECAY = 100
 TAU = 0.002
 LR = 1e-4
-EPISODE_LENGTH = 1000
+EPISODE_LENGTH = 256
 # ==================================
 
 class Agent():
@@ -43,29 +46,52 @@ class Agent():
     
     def goalCompleted(self, action, goal) -> bool:
         return (action.actionType == uc.determineAction(goal['status']) and action.objectOn == goal['objectId'])
+    
+    def plotReward(self, rewards, episodes, plotTitle="Rewards", xLabel="Episodes", yLabel="Rewards"):
+        colors = ['b', 'k', 'm', 'r', 'c', 'y', 'c']
+        fig, axs = plt.subplots(1, len(self.environments), figsize=(5*len(self.environments), 5))
+        for i, ax in enumerate(axs):
+            ax.set_title(f"Environment {i+1}")
+            ax.set_xlabel(xLabel)
+            ax.set_ylabel(yLabel)
+            ax.plot(episodes, rewards[i][0], color=colors[i], label=f"{plotTitle}")
+            ax.plot(episodes, rewards[i][1], color='orange', label=f'Past 10 average {plotTitle}')
+        plt.legend()
+        plt.savefig(f'out/{plotTitle}.png')
+
+        # plt.show()
 
     # Training the interactive agent in the ai2thor environments
     def train(self, controller):
-        for epoch in range(self.epochs):
-            for idx, environment in enumerate(tqdm(self.environments, desc=f"Going through each environment for epoch {epoch+1}")):
+        rewardsArray = []
+        failsArray = []
+        actionsArray = []
+        for idx, environment in enumerate(tqdm(self.environments, desc=f"Training model for {len(self.environments)} environments")):
+            rArray = []
+            fArray = []
+            aArray = []
+            avgR = []
+            avgF = []
+            avgA = []
+            for epoch in tqdm(range(self.epochs), desc=f"Training the model for {self.epochs} epochs"):
                 # Get environment specific goal
                 goal = self.goalTasks[idx]
 
                 fails = 0
+                actions = 0
+                episode = 0
+                rewards = []
 
                 # Reset the controller to the new environment
                 controller.reset(scene=environment)
                 controller.step(action="Initialize")
-                controller.step(action="MoveAhead")
-                controller.step(action="MoveLeft")
 
                 # Initial state
                 state = State.State(controller.last_event.metadata, 
                                     controller.step("GetReachablePositions").metadata["actionReturn"])
                 
-                episode = 0
                 while(episode < EPISODE_LENGTH):
-                    eps = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * episode / EPS_DECAY)
+                    eps = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * (epoch) / EPS_DECAY)
 
                     act = 0
                     # Determine action
@@ -78,7 +104,9 @@ class Agent():
                         act = uc.ALL_ACTIONS.index(random.sample(state.getPossibleActions(), 1)[0])
                     
                     action = Action.Action(uc.ALL_ACTIONS[act], state.chooseFromReach(uc.ALL_ACTIONS[act]), False)
-                    print(f"Choosing Action: {action}")
+                    if self.verbose:
+                        print(f"Choosing Action: {action}")
+                    
                     # Execute action
                     if action.objectOn is not None:
                         event = controller.step(action.actionType, objectId=action.objectOn) 
@@ -92,20 +120,24 @@ class Agent():
                     if (not event.metadata["lastActionSuccess"]):
                         # Handle an unsuccessful action
                         # For now, we'll just try a new action
-                        print(f"Action {action} failed.")
+                        if self.verbose:
+                            print(f"Action {action} failed.")
                         fails += 1
                         # continue
                     
                     # We accomplished the goal, do additional reporting here
                     if (self.goalCompleted(action, goal)):
-                        print(f"Goal for {environment}_{idx+1} completed!")
+                        if self.verbose:
+                            print(f"\nGoal for {environment} completed!")
 
                         state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
-                        expected_state_action_values = torch.tensor(1.0)
+                        expected_state_action_values = torch.tensor(10.0)
                         loss = F.mse_loss(state_action_values, expected_state_action_values)
                         self.optimizer.zero_grad()
                         loss.backward()
                         self.optimizer.step()
+
+                        rewards.append(10)
                         break
                     
                     state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
@@ -115,10 +147,12 @@ class Agent():
                     loss.backward()
                     self.optimizer.step()
 
-                    if idx % 64 == 0:
+                    # Update target policy network every so often
+                    if (episode+epoch) % 32 == 0:
                         for target_param, policy_param in zip(self.target_net.parameters(), self.policy_net.parameters()):
                             target_param.data.copy_(TAU * policy_param.data + (1.0 - TAU) * target_param.data)
                     
+                    rewards.append(reward)
                     # Create the new state and add it to the memory
                     newState = State.State(controller.last_event.metadata,
                                         controller.step("GetReachablePositions").metadata["actionReturn"])
@@ -126,6 +160,19 @@ class Agent():
                     episode += 1
                 
                 controller.step(action="Done")
+
+                rArray.append(np.mean(rewards) / episode * EPISODE_LENGTH)
+                fArray.append(fails)
+                aArray.append(episode-fails)
+
+                if epoch > 10:
+                    avgR.append(np.mean(rArray[-10:]))
+                    avgF.append(np.mean(fArray[-10:]))
+                    avgA.append(np.mean(aArray[-10:]))
+                else:
+                    avgR.append(np.mean(rArray))
+                    avgF.append(np.mean(fArray))
+                    avgA.append(np.mean(aArray))
                 
                 # TODO: Lifelong Learning Componenet
                 # self.model.update_theta(self.BufferStream, idx)
@@ -134,10 +181,17 @@ class Agent():
                     print(f"Goal: {goal}")
                     print(f"State to achieve goal: {state}")
                     print(f"The robot failed to do an action {fails} times.")
-            print(f"Epoch {epoch+1} completed!")
-        return
-    
-    
+
+            rewardsArray.append((rArray, avgR))
+            failsArray.append((fArray, avgF))
+            actionsArray.append((aArray, avgA))
+
+            if self.verbose:
+                print(f"Epoch {epoch+1} completed!")
+
+        self.plotReward(rewardsArray, np.arange(self.epochs), plotTitle="Average Rewards", xLabel="Episodes", yLabel="Average Rewards")
+        self.plotReward(failsArray, np.arange(self.epochs), plotTitle="Fails", xLabel="Episodes", yLabel="Fails")
+        self.plotReward(actionsArray, np.arange(self.epochs), plotTitle="Actions", xLabel="Episodes", yLabel="Actions")
             
     # Let's test the agent in the ai2thor environments
     def test(self, controller):

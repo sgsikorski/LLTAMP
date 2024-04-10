@@ -13,16 +13,14 @@ import torch.nn.functional as F
 class DQN(nn.Module):
     def __init__(self, input_dim, n_actions):
         super(DQN, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 32)
-        self.fc2 = nn.Linear(32, 64)
-        self.fc3 = nn.Linear(64, 64)
-        self.fc4 = nn.Linear(64, n_actions)
+        self.fc1 = nn.Linear(input_dim, 64)
+        self.fc2 = nn.Linear(64, 64)
+        self.fc3 = nn.Linear(64, n_actions)
     
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        x = F.relu(self.fc3(x))
-        return self.fc4(x)
+        return self.fc3(x)
 
     def Q(self, state, action):
         return self.forward(state)[action]
@@ -79,72 +77,3 @@ class Model(Net):
     
     def loadModel(self, path='models/trained_agent.pt'):
         self.net.load_state_dict(torch.load(path))
-'''
-# Sampling based policy
-def InitialPolicy(state, goalTasks):
-    objOn = None
-    completeGoal = False
-    # If goal object is visible, interact with it
-        # Will introduce limitations of object that obstruct movement but not vision
-    if (goalTasks["objectId"] in state.reachObjName):
-        ob = [o for o in state.reachableObjects if o['isPickedUp']]
-        if len(ob) > 0:
-            actionType = 'DropHandObject'
-            objOn = ob[0]['objectId']
-        else:    
-            objOn = goalTasks["objectId"]
-            objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
-            status = goalTasks["status"]
-            if status == "Move":
-                status = "MoveHeld" if objOnProp["pickupable"] else "Push"
-            actionType = utilConstants.determineAction(status)
-            completeGoal = True
-    else:
-        choices = 1 if len(state.reachableObjects) < 1 else 2
-        match(random.randint(0, choices)):
-            case 0:
-                # Randomly sample x, y discretized by .25 from 10 <= x, y <= 10
-                sam = random.randint(-40, 40) * utilConstants.GRIDSIZE
-                samMag = np.sign(sam - state.agentX)
-                actionType = ("MoveAhead" if samMag > 0 else "MoveBack")
-            case 1:
-                actionType = "RotateRight" if random.randint(0, 1) == 0 else "RotateLeft"
-            case 2:
-                # Random object to interact with
-                objOn = random.choice(state.reachObjName)
-                objOnProp = next((obj for obj in state.reachableObjects if obj["objectId"] == objOn), None)
-                potentialActions = utilConstants.getPotentialActions(objOnProp)
-                actionType = random.choice(utilConstants.MOVEMENT_ACTION_TYPES) if len(potentialActions) < 1 else random.choice(potentialActions)
-                if actionType == 'MoveHeldObject' or actionType in utilConstants.MOVEMENT_ACTION_TYPES:
-                    objOn = None
-    action = Action.Action(actionType, objOn, completeGoal)
-    return action
-
-# We can define difference by measuring distance of agent locations
-# objects in the scene, and the states of the object
-# How different is state1 to state2
-def difference(state1, state2):
-    diff = 0
-    # Take manhattan distance
-    diff += state1.getManhattanDistance() - state2.getManhattanDistance()
-    diff += state1.getObjDiff(state2)
-    return diff
-
-def B(s, a, controller, goal):
-    b = sys.maxsize
-    if a.actionType in utilConstants.MOVEMENT_ACTION_TYPES:
-        event = controller.step(a.actionType)
-        if (not event.metadata["lastActionSuccess"]):
-            return b
-        b = difference(s, State.State(controller.last_event.metadata, 
-                                    controller.step("GetReachablePositions").metadata["actionReturn"]))
-        controller.step(a.getOppositeActionType())
-    else:
-        # Logic on how to judge if an action is a good idea
-        if (goal["status"] == "Move"):
-            objPos = goal["objPosition"]
-            return np.sqrt((s.agentX - objPos["x"])**2 + (s.agentY - objPos["y"])**2 + (s.agentZ - objPos["z"])**2)
-        if (goal["objectId"] in s.reachObjName):
-            return 0
-    return b
-'''

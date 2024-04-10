@@ -73,7 +73,7 @@ def main():
     agent = Agent(args, environments, goalTasks, model)
     if args.train:
         agent.train(controller)
-        model.saveModel(args.model_path)
+        # model.saveModel(args.model_path)
     if args.test:
         agent.model.loadModel(args.model_path)
         agent.test(controller)
