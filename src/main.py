@@ -1,6 +1,7 @@
 import sys 
 import os
 import math
+import torch
 
 from ai2thor.controller import Controller
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir)))
@@ -14,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description="Training and testing an interactive robot for task completion in iTHOR")
     parser.add_argument("-tr", "--train", action="store_true", help="Train the model")
     parser.add_argument("-te", "--test", action="store_true", help="Test the model")    
-    parser.add_argument("-mp", "--model_path", default='models/trained_agent.pt', dest='model_path', type=str, help="Path to the model")
+    parser.add_argument("-mp", "--model_path", default='src/models/trained_agent', dest='model_path', type=str, help="Path to the model")
     parser.add_argument("-gp", "--goal_path", dest='goal_path', default="goalTasks.json", type=str, help="Path to the goal tasks")
     parser.add_argument("-envs", "--environments", type=str, help="Environments to train and test the model on")
     parser.add_argument("-enum", "--enum", type=int, choices=range(1, 31), default=31, help="Number of environments to train and test the model on")
@@ -26,7 +27,7 @@ def main():
     controller = Controller(
         agentMode = "default",
         visibilityDistance=1.5,
-        scene="FloorPlan1",
+        scene="FloorPlan5",
         gridSize=uc.GRIDSIZE,
         movementGaussianSigma = 0,
         rotateStepDegress=90,
@@ -73,9 +74,12 @@ def main():
     agent = Agent(args, environments, goalTasks, model)
     if args.train:
         agent.train(controller)
-        # model.saveModel(args.model_path)
+        torch.save(agent.policy_net.state_dict(), f"{args.model_path}_policy.pth")
+        torch.save(agent.target_net.state_dict(), f"{args.model_path}_target.pth")
     if args.test:
-        agent.model.loadModel(args.model_path)
+        # agent.model.loadModel(args.model_path)
+        agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pth"))
+        agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pth"))
         agent.test(controller)
 
     print("Done!")

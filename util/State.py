@@ -104,6 +104,7 @@ State: \u007b
         if goal['objectId'] in self.reachObjName:
             return 1
         if goal['objectId'] in self.visObjName:
-            return 0.5
+            idx = self.visObjName.index(goal['objectId'])
+            return 1. / self.visibleObjects[idx]['distance']
         return 0
         

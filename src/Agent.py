@@ -21,7 +21,7 @@ EPS_END = 0.003
 EPS_DECAY = 100
 TAU = 0.002
 LR = 1e-4
-EPISODE_LENGTH = 256
+EPISODE_LENGTH = 50
 # ==================================
 
 class Agent():
@@ -44,11 +44,15 @@ class Agent():
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=LR, amsgrad=True)
     
+    def saveModel(self, mp, envidx):
+        torch.save(self.policy_net.state_dict(), f"{mp}_{envidx}_policy.pth")
+        torch.save(self.target_net.state_dict(), f"{mp}_{envidx}_target.pth")
+
     def goalCompleted(self, action, goal) -> bool:
         return (action.actionType == uc.determineAction(goal['status']) and action.objectOn == goal['objectId'])
     
     def plotReward(self, rewards, episodes, plotTitle="Rewards", xLabel="Episodes", yLabel="Rewards"):
-        colors = ['b', 'k', 'm', 'r', 'c', 'y', 'c']
+        colors = ['b', 'k', 'm', 'grey', 'c', 'y', 'c']
         fig, axs = plt.subplots(1, len(self.environments), figsize=(5*len(self.environments), 5))
         for i, ax in enumerate(axs):
             ax.set_title(f"Environment {i+1}")
@@ -57,7 +61,7 @@ class Agent():
             ax.plot(episodes, rewards[i][0], color=colors[i], label=f"{plotTitle}")
             ax.plot(episodes, rewards[i][1], color='orange', label=f'Past 10 average {plotTitle}')
         plt.legend()
-        plt.savefig(f'out/{plotTitle}.png')
+        plt.savefig(f'out/{plotTitle}_2.png')
 
         # plt.show()
 
@@ -96,7 +100,7 @@ class Agent():
                     act = 0
                     # Determine action
                     if random.random() > eps:
-                        # TODO: Elegant way to handle this
+                        # TODO: Change this to max_a of getPossibleActions
                         act = self.policy_net.maxQ(torch.tensor(state.getOneHotEncoding(), device=self.device))
                         if (uc.ALL_ACTIONS[act] not in state.getPossibleActions()):
                             act = uc.ALL_ACTIONS.index(random.sample(state.getPossibleActions(), 1)[0])
@@ -131,13 +135,13 @@ class Agent():
                             print(f"\nGoal for {environment} completed!")
 
                         state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
-                        expected_state_action_values = torch.tensor(10.0)
+                        expected_state_action_values = torch.tensor(5.0)
                         loss = F.mse_loss(state_action_values, expected_state_action_values)
                         self.optimizer.zero_grad()
                         loss.backward()
                         self.optimizer.step()
 
-                        rewards.append(10)
+                        rewards.append(5)
                         break
                     
                     state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
@@ -189,81 +193,64 @@ class Agent():
             if self.verbose:
                 print(f"Epoch {epoch+1} completed!")
 
+            # Save this environment's trained policy and target networks
+            self.saveModel("src/model/agent", idx)
+            self.saveModel("src/model/agent", idx)
+
         self.plotReward(rewardsArray, np.arange(self.epochs), plotTitle="Average Rewards", xLabel="Episodes", yLabel="Average Rewards")
         self.plotReward(failsArray, np.arange(self.epochs), plotTitle="Fails", xLabel="Episodes", yLabel="Fails")
         self.plotReward(actionsArray, np.arange(self.epochs), plotTitle="Actions", xLabel="Episodes", yLabel="Actions")
             
     # Let's test the agent in the ai2thor environments
-    def test(self, controller):
+    def test(self, controller, env="FloorPlan1", envidx=1):
         # Allow screen recording to be set up
         stime = time.perf_counter()
         while(time.perf_counter() - stime < 10):
             continue
-        successRate = 0
-        for idx, environment in enumerate(tqdm(self.environments, desc="Testing the model on the environments")):
-            numInitActions = 0
-            numThetaActions = 0
-            fails = 0
-            transitionStream = set()
-            controller.reset(scene=environment)
+        fails = 0
+        actions = 0
+        controller.reset(scene=env)
 
-            # Initial state
-            state = State.State(controller.last_event.metadata,
+        # Initial state
+        state = State.State(controller.last_event.metadata,
+                            controller.step("GetReachablePositions").metadata["actionReturn"])
+
+        goal = self.goalTasks[envidx]
+        
+        frames = []
+        while(True):
+            frames.append(controller.last_event.frame)
+            # Determine action
+            act = self.policy_net.maxQ(torch.tensor(state.getOneHotEncoding(), device=self.device))
+            action = Action.Action(uc.ALL_ACTIONS[act], state.chooseFromReach(uc.ALL_ACTIONS[act]), False)
+            
+            # Execute action
+            if action.objectOn is not None:
+                event = controller.step(action.actionType, objectId=action.objectOn) 
+            else:
+                event = controller.step(action.actionType)
+
+            newState = State.State(controller.last_event.metadata,
                                 controller.step("GetReachablePositions").metadata["actionReturn"])
 
-            goal = self.goalTasks[idx]
+            if (not event.metadata["lastActionSuccess"]):
+                # Handle an unsuccessful action
+                # For now, we'll just try a new action
+                fails += 1
+                continue
             
-            startTime = time.perf_counter()
-            while(time.perf_counter() - startTime < self.timeout):
-                nTime = time.perf_counter()
-                while (time.perf_counter() - nTime < 0.5):
-                    continue
-                # Determine action
-                a0 = ll.InitialPolicy(state, goal)
-                aHatType = uc.ALL_ACTIONS[self.model.predict(
-                    torch.tensor([[state.agentX, state.agentY, state.agentZ]]))[0].argmax()]
-                if (aHatType == "TASKDONE"):
-                    aHat = Action.Action("Done", None, True)
-                else:
-                    if aHatType in uc.MOVEMENT_ACTION_TYPES:
-                        aHat = Action.Action(aHatType, None, False)
-                    else:
-                        aHat = Action.Action(aHatType, state.chooseFromReach(aHatType), False)
+            actions += 1
+            if (self.goalCompleted(action, goal)):
+                if self.verbose:
+                    print(f"\nGoal for {env} completed!")
+                break
             
-                # Pick action with better score
-                action = min([a0, aHat], key=lambda a: ll.B(state, a, controller, goal))
-                # Execute action
-                event = controller.step(action.actionType, objectId=action.objectOn) if action.objectOn is not None else controller.step(action.actionType)
-                if (not event.metadata["lastActionSuccess"]):
-                    # Handle an unsuccessful action
-                    # For now, we'll just try a new action
-                    fails += 1
-                    continue
-            
-                if (action == a0): numInitActions += 1
-                if (action == aHat): numThetaActions += 1
-                transition = Transition.Transition(state, action)
-                transitionStream.add(transition)
+            newState = State.State(controller.last_event.metadata,
+                                controller.step("GetReachablePositions").metadata["actionReturn"])
+            state = newState
+        
+        controller.step(action="Done")
+        if (self.verbose):
+            print(f"The robot failed to do an action {fails} times.")
+            print(f"The robot did {actions} actions.")
 
-                if action.completeGoal:
-                    successRate += 1
-                    print(f"Goal for {environment}_{idx+1} completed!")
-                    controller.step(action="Done")
-                    break
-                
-                newState = State.State(controller.last_event.metadata,
-                                    controller.step("GetReachablePositions").metadata["actionReturn"])
-                state = newState
-            
-            self.testActionAmount[idx] = numInitActions + numThetaActions
-            controller.step(action="Done")
-            if (self.verbose):
-                print(f"The number of actions taken in environment {environment} is {numInitActions + numThetaActions}.")
-                print(f"The robot failed to do an action {fails} times.")
-                print(f"The number of actions taken from the initial policy is {numInitActions}.")
-                print(f"The number of actions taken from the theta policy is {numThetaActions}.")
-                for i, transition in enumerate(transitionStream):
-                    print(f"Transition {i} : {transition}")
-
-        print(f"There was a {successRate / len(self.environments)} success rate.")
-        return

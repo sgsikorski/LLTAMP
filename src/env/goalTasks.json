@@ -8,8 +8,8 @@
         "status": "On"
     },
     {
-        "objectId": "SaltShaker|+00.33|+01.31|-02.83",
-        "status": "PickUp"
+        "objectId": "CoffeeMachine|+01.13|+01.31|-01.43",
+        "status": "On"
     },
     {
         "objectId": "Fridge|-03.52|+00.00|+02.72",

@@ -6,7 +6,7 @@
         "request": "launch",
         "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-gp", "src/env/goalTasks.json", "-envs", "k", "-enum", "5", "--epochs", "100"],
+        "args": ["--train", "-gp", "src/env/goalTasks.json", "-envs", "k", "-enum", "5", "--epochs", "200"],
     },
     {
         "name": "Test",
