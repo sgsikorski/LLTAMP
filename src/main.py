@@ -17,7 +17,6 @@ def main():
     parser.add_argument("-te", "--test", action="store_true", help="Test the model")    
     parser.add_argument("-mp", "--model_path", default='src/models/trained_agent', dest='model_path', type=str, help="Path to the model")
     parser.add_argument("-gp", "--goal_path", dest='goal_path', default="goalTasks.json", type=str, help="Path to the goal tasks")
-    parser.add_argument("-envs", "--environments", type=str, help="Environments to train and test the model on")
     parser.add_argument("-enum", "--enum", type=int, choices=range(1, 31), default=31, help="Number of environments to train and test the model on")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
     parser.add_argument("-t", "--timeout", type=int, default=100, help="Timeout for training and testing")
@@ -41,29 +40,8 @@ def main():
     model = ll.Model(input_dim=3+len(uc.OBJECT_TYPES), n_tasks=args.enum)
 
     # Add which environments we want to conduct over
-    environments = []
-    kitchens = [f"FloorPlan{i}" for i in range(1, args.enum+1)]
-    living_rooms = [f"FloorPlan{200 + i}" for i in range(1, args.enum+1)]
-    bedrooms = [f"FloorPlan{300 + i}" for i in range(1, args.enum+1)]
-    bathrooms = [f"FloorPlan{400 + i}" for i in range(1, args.enum+1)]
+    environments = [f"FloorPlan{i}" for i in range(1, args.enum+1)]
     
-    envsToUse = args.environments if args.environments is not None else "klbeba"
-    if "k" in envsToUse: environments += kitchens
-    if "l" in envsToUse: environments += living_rooms
-    if "be" in envsToUse: environments += bedrooms
-    if "ba" in envsToUse: environments += bathrooms
-
-    # with open("objects.json", "w+") as f:
-    #     f.write("{\n")
-    #     for env in environments:
-    #         controller.reset(scene=env)
-    #         f.write("\"" + env + "\":[\n")
-    #         for obj in controller.last_event.metadata["objects"]:
-    #             f.write("\"" + obj['objectId'] + "\"")
-    #             f.write(",\n")
-    #         f.write("],\n")
-    #     f.write("}")
-
     try:
         with open(args.goal_path) as f:
             goalTasks = json.load(f)
@@ -77,7 +55,6 @@ def main():
         torch.save(agent.policy_net.state_dict(), f"{args.model_path}_policy.pth")
         torch.save(agent.target_net.state_dict(), f"{args.model_path}_target.pth")
     if args.test:
-        # agent.model.loadModel(args.model_path)
         agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pth"))
         agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pth"))
         agent.test(controller)
