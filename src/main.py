@@ -26,7 +26,7 @@ def main():
     controller = Controller(
         agentMode = "default",
         visibilityDistance=1.5,
-        scene="FloorPlan5",
+        scene="FloorPlan1",
         gridSize=uc.GRIDSIZE,
         movementGaussianSigma = 0,
         rotateStepDegress=90,
@@ -52,11 +52,11 @@ def main():
     agent = Agent(args, environments, goalTasks, model)
     if args.train:
         agent.train(controller)
-        torch.save(agent.policy_net.state_dict(), f"{args.model_path}_policy.pth")
-        torch.save(agent.target_net.state_dict(), f"{args.model_path}_target.pth")
+        torch.save(agent.policy_net.state_dict(), f"{args.model_path}_policy.pt")
+        torch.save(agent.target_net.state_dict(), f"{args.model_path}_target.pt")
     if args.test:
-        agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pth"))
-        agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pth"))
+        agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pt"))
+        agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pt"))
         agent.test(controller)
 
     print("Done!")
