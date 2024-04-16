@@ -57,7 +57,7 @@ def main():
     if args.test:
         agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pt"))
         agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pt"))
-        agent.test(controller)
+        agent.test(controller, "FloorPlan4", 3)
 
     print("Done!")
 

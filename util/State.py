@@ -86,18 +86,24 @@ State: \u007b
 
     # This is really not a one-hot encoding as we have floats in the agent's position and the distance of the object
     def getOneHotEncoding(self):
-        oneHot = [self.agentX, self.agentY, self.agentZ]
-        oneHot += [0] * len(utilConstants.OBJECT_TYPES)
+        oneHot = np.zeros((len(utilConstants.OBJECT_TYPES), len(utilConstants.OBJECT_PROPERTIES)+1), dtype=float)
+        # All objects and their reachable/visible status and action status
         for obj in self.visibleObjects:
             # If the object is not in the object types, we skip it
-            if obj not in utilConstants.OBJECT_TYPES:
+            if obj['objectType'] not in utilConstants.OBJECT_TYPES:
                 continue
+            idx = utilConstants.OBJECT_TYPES.index(obj['objectType'])
+            idx = utilConstants.OBJECT_TYPES.index("TomatoSliced")
             if obj in self.reachableObjects:
-                oneHot[utilConstants.OBJECT_TYPES.index(obj['objectType'])] = 1
+                oneHot[idx][0] = 1
             else:
-                oneHot[utilConstants.OBJECT_TYPES.index(obj['objectType'])] = 1. / obj['distance']
-        return oneHot
+                oneHot[idx][0] = 1. / obj['distance']
+            for i, property in enumerate(utilConstants.OBJECT_PROPERTIES):
+                oneHot[idx][i+1] = 1 if obj[property] else 0
+        oneHot = oneHot.flatten()
+        return np.concatenate((np.array([self.agentX, self.agentY, self.agentZ]), oneHot))
 
+    # TODO: Hierarchical reward to subtasks of main task
     def getReward(self, goal):
         if not self.envMD["lastActionSuccess"]:
             return -1

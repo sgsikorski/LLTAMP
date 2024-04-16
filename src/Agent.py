@@ -19,10 +19,10 @@ BATCH_SIZE = 64
 GAMMA = 0.99
 EPS_START = 0.9
 EPS_END = 0.003
-EPS_DECAY = 100
 TAU = 0.002
 LR = 1e-4
 EPISODE_LENGTH = 100
+EPS_DECAY = 128 * (EPISODE_LENGTH / 10)
 # ==================================
 
 class Agent():
@@ -40,8 +40,8 @@ class Agent():
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self.policy_net = ll.DQN(3+len(uc.OBJECT_TYPES), len(uc.ALL_ACTIONS)).to(self.device)
-        self.target_net = ll.DQN(3+len(uc.OBJECT_TYPES), len(uc.ALL_ACTIONS)).to(self.device)
+        self.policy_net = ll.DQN(3+len(uc.OBJECT_TYPES)*(len(uc.OBJECT_PROPERTIES)+1), len(uc.ALL_ACTIONS)).to(self.device)
+        self.target_net = ll.DQN(3+len(uc.OBJECT_TYPES)*(len(uc.OBJECT_PROPERTIES)+1), len(uc.ALL_ACTIONS)).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=LR, amsgrad=True)
     
@@ -52,15 +52,14 @@ class Agent():
     def goalCompleted(self, action, goal) -> bool:
         return (action.actionType == uc.determineAction(goal['status']) and action.objectOn == goal['objectId'])
     
-    def plotReward(self, rewards, episodes, plotTitle="Rewards", xLabel="Episodes", yLabel="Rewards"):
-        colors = ['b', 'k', 'm', 'grey', 'c', 'y', 'c']
+    def plotReward(self, rewards, episodes, plotTitle="Rewards", xLabel="Episodes", yLabel="Rewards", color='k'):
         # Plot each environment in a different subplot
         fig, axs = plt.subplots(1, len(self.environments), figsize=(5*len(self.environments), 5))
         for i, ax in enumerate(axs):
             ax.set_title(f"Environment {i+1}")
             ax.set_xlabel(xLabel)
             ax.set_ylabel(yLabel)
-            ax.plot(episodes, rewards[i][0], color=colors[i], label=f"{plotTitle}")
+            ax.plot(episodes, rewards[i][0], color=color, label=f"{plotTitle}")
             ax.plot(episodes, rewards[i][1], color='orange', label=f'Past 10 average {plotTitle}')
         plt.legend()
         plt.savefig(f'out/{plotTitle}_2.png')
@@ -97,16 +96,12 @@ class Agent():
                                     controller.step("GetReachablePositions").metadata["actionReturn"])
                 
                 while(episode < EPISODE_LENGTH):
-                    eps = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * (epoch) / EPS_DECAY)
+                    eps = EPS_END + (EPS_START - EPS_END) * math.exp(-1. * (epoch+episode) / EPS_DECAY)
 
                     act = 0
                     # Determine action
                     if random.random() > eps:
-                        acts = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))
-                        pActIdx = [uc.ALL_ACTIONS.index(act) for act in state.getPossibleActions()]
-                        act = torch.argmax(acts[pActIdx]).item()
-
-                        # Safeguard to ensure that the action is possible. This should not be hit ever
+                        act = self.policy_net.maxQ(torch.tensor(state.getOneHotEncoding(), device=self.device))
                         if (uc.ALL_ACTIONS[act] not in state.getPossibleActions()):
                             act = uc.ALL_ACTIONS.index(random.sample(state.getPossibleActions(), 1)[0])
                     else:
@@ -140,19 +135,19 @@ class Agent():
                             print(f"\nGoal for {environment} completed!")
 
                         state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
-                        expected_state_action_values = torch.tensor(10.0)
+                        expected_state_action_values = torch.tensor(5.0, dtype=torch.float64, device=self.device)
                         loss = F.mse_loss(state_action_values, expected_state_action_values)
                         self.optimizer.zero_grad()
                         loss.backward()
                         self.optimizer.step()
 
-                        rewards.append(10.0)
+                        rewards.append(5.0)
                         goalsCompleted += 1
                         break
                     
                     # Update the policy network given the chosen (state, action, reward, newState) with MSE loss
                     state_action_values = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))[act]
-                    expected_state_action_values = reward + GAMMA * torch.max(self.target_net(torch.tensor(state.getOneHotEncoding(), device=self.device)))
+                    expected_state_action_values = reward + GAMMA * torch.max(self.target_net(torch.tensor(newState.getOneHotEncoding(), device=self.device)))
                     loss = F.mse_loss(state_action_values, expected_state_action_values)
                     self.optimizer.zero_grad()
                     loss.backward()
@@ -195,6 +190,8 @@ class Agent():
                     print(f"State to achieve goal: {state}")
                     print(f"The robot failed to do an action {fails} times.")
 
+                if epoch % 50 == 0:
+                    print(f"Number of Goals Completed: {goalsCompleted}\n")
             rewardsArray.append((rArray, avgR))
             failsArray.append((fArray, avgF))
             actionsArray.append((aArray, avgA))
@@ -206,16 +203,13 @@ class Agent():
             self.saveModel("src/models/agent", idx)
             self.saveModel("src/models/agent", idx)
 
-            if epoch % 50 == 0:
-                print(f"Number of Goals Completed: {goalsCompleted}")
-
         # Plot the rewards, fails, and actions
         self.plotReward(rewardsArray, np.arange(self.epochs), plotTitle="Average Rewards", xLabel="Episodes", yLabel="Average Rewards")
-        self.plotReward(failsArray, np.arange(self.epochs), plotTitle="Fails", xLabel="Episodes", yLabel="Fails")
-        self.plotReward(actionsArray, np.arange(self.epochs), plotTitle="Actions", xLabel="Episodes", yLabel="Actions")
+        self.plotReward(failsArray, np.arange(self.epochs), plotTitle="Fails", xLabel="Episodes", yLabel="Fails", color='b')
+        self.plotReward(actionsArray, np.arange(self.epochs), plotTitle="Actions", xLabel="Episodes", yLabel="Actions", color='c')
             
     # Let's test the agent in the ai2thor environments
-    def test(self, controller, env="FloorPlan1", envidx=1):
+    def test(self, controller, env="FloorPlan1", envidx=0):
         # Allow screen recording to be set up
         stime = time.perf_counter()
         while(time.perf_counter() - stime < 10):
@@ -234,7 +228,10 @@ class Agent():
         while(True):
             frames.append(controller.last_event.frame)
             # Determine action
-            act = self.policy_net.maxQ(torch.tensor(state.getOneHotEncoding(), device=self.device))
+            acts = self.policy_net(torch.tensor(state.getOneHotEncoding(), device=self.device))
+            pActIdx = [uc.ALL_ACTIONS.index(a) for a in state.getPossibleActions()]
+            act = pActIdx[torch.argmax(acts[pActIdx]).item()]
+            # act = self.policy_net.maxQ(torch.tensor(state.getOneHotEncoding(), device=self.device))
             action = Action.Action(uc.ALL_ACTIONS[act], state.chooseFromReach(uc.ALL_ACTIONS[act]), False)
             
             # Execute action
@@ -254,6 +251,7 @@ class Agent():
             
             actions += 1
             if (self.goalCompleted(action, goal)):
+                frames.append(controller.last_event.frame)
                 if self.verbose:
                     print(f"\nGoal for {env} completed!")
                 break
@@ -266,5 +264,5 @@ class Agent():
         if (self.verbose):
             print(f"The robot failed to do an action {fails} times.")
             print(f"The robot did {actions} actions.")
-        imageio.mimsave(f'out/{env}.mp4', frames, fps=60)
+        imageio.mimsave(f'out/{env}.mp4', frames, fps=1)
 

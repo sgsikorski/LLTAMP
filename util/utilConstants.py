@@ -144,3 +144,19 @@ ACTION_TYPES = [
 ]
 
 ALL_ACTIONS = MOVEMENT_ACTION_TYPES + ACTION_TYPES
+
+OBJECT_PROPERTIES = [
+    "isBroken",
+    "isColdSource",
+    "isCooked",
+    "isDirty",
+    "isFilledWithLiquid",
+    "isHeatSource",
+    "isInteractable",
+    "isMoving",
+    "isOpen",
+    "isPickedUp",
+    "isSliced",
+    "isToggled",
+    "isUsedUp"
+]

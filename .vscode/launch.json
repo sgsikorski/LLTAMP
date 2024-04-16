@@ -6,15 +6,15 @@
         "request": "launch",
         "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-gp", "src/env/goalTasks.json", "-envs", "k", "-enum", "5", "--epochs", "200"],
+        "args": ["--train", "-gp", "src/env/goalTasks.json", "-enum", "2", "--epochs", "128"],
     },
     {
         "name": "Test",
         "type": "debugpy",
         "request": "launch",
-        "program": "main.py",
+        "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--test", "-envs", "k", "--timeout", "20", "-v", "-enum", "5", ">", "logs/TestModelLog.txt"],
+        "args": ["--test", "-gp", "src/env/goalTasks.json", "-mp", "src/models/agent_3"],
     },
     {
         "name": "Train and Test",
