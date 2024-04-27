@@ -28,6 +28,11 @@ class DQN(nn.Module):
     def maxQ(self, state):
         return torch.argmax(self.forward(state))
 
+    def reset(self):
+        self.fc1.reset_parameters()
+        self.fc2.reset_parameters()
+        self.fc3.reset_parameters()
+
 class NetInputs():
     def __init__(self, n_layers, n_hiddens, lr, cuda, n_memories, memory_strength):
         self.n_layers = n_layers

@@ -116,6 +116,9 @@ OBJECT_TYPES = [
 
 MOVEMENT_ACTION_TYPES = [
     "MoveAhead",
+    "MoveBack",
+    "MoveRight",
+    "MoveLeft",
     "RotateRight",
     "RotateLeft"
 ]

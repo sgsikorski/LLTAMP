@@ -25,15 +25,15 @@ def main():
 
     controller = Controller(
         agentMode = "default",
-        visibilityDistance=1.5,
+        visibilityDistance=2.5,
+        fieldOfView=105,
         scene="FloorPlan1",
         gridSize=uc.GRIDSIZE,
         movementGaussianSigma = 0,
         rotateStepDegress=90,
         rotateGaussianSigma = 0,
-        fieldOfView = 90,
-        width=960,
-        height=1080
+        width=320,
+        height=360
     )
 
     # input_dim: agent position + one-hot encoding of interactable objects
@@ -52,12 +52,8 @@ def main():
     agent = Agent(args, environments, goalTasks, model)
     if args.train:
         agent.train(controller)
-        torch.save(agent.policy_net.state_dict(), f"{args.model_path}_policy.pt")
-        torch.save(agent.target_net.state_dict(), f"{args.model_path}_target.pt")
     if args.test:
-        agent.policy_net.load_state_dict(torch.load(f"{args.model_path}_policy.pt"))
-        agent.target_net.load_state_dict(torch.load(f"{args.model_path}_target.pt"))
-        agent.test(controller, "FloorPlan4", 3)
+        agent.test(controller, args.model_path)
 
     print("Done!")
 

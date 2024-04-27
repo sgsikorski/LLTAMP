@@ -70,12 +70,14 @@ State: \u007b
                 break
         return reachableObjects
 
-    def chooseFromReach(self, actionType):
+    def chooseFromReach(self, actionType, goal):
         if actionType == "MoveHeldObject" or actionType == "DropHandObject":
             return None
         if (actionType in utilConstants.MOVEMENT_ACTION_TYPES):
             return None
         toChoose = [obj['objectId'] for obj in self.reachableObjects if actionType in utilConstants.getPotentialActions(obj)]
+        if goal['objectId'] in toChoose:
+            return goal['objectId']
         return random.choice(toChoose) if len(toChoose) > 0 else None
 
     def getPossibleActions(self):
@@ -93,11 +95,10 @@ State: \u007b
             if obj['objectType'] not in utilConstants.OBJECT_TYPES:
                 continue
             idx = utilConstants.OBJECT_TYPES.index(obj['objectType'])
-            idx = utilConstants.OBJECT_TYPES.index("TomatoSliced")
             if obj in self.reachableObjects:
                 oneHot[idx][0] = 1
-            else:
-                oneHot[idx][0] = 1. / obj['distance']
+            #else:
+            #    oneHot[idx][0] = 1. / obj['distance']
             for i, property in enumerate(utilConstants.OBJECT_PROPERTIES):
                 oneHot[idx][i+1] = 1 if obj[property] else 0
         oneHot = oneHot.flatten()
@@ -106,11 +107,11 @@ State: \u007b
     # TODO: Hierarchical reward to subtasks of main task
     def getReward(self, goal):
         if not self.envMD["lastActionSuccess"]:
-            return -1
+            return -10
         if goal['objectId'] in self.reachObjName:
-            return 1
+            return 5
         if goal['objectId'] in self.visObjName:
             idx = self.visObjName.index(goal['objectId'])
-            return 1. / self.visibleObjects[idx]['distance']
+            return 1 / self.visibleObjects[idx]['distance']
         return 0
         
