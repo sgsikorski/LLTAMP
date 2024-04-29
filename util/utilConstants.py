@@ -9,24 +9,24 @@ def getPotentialActions(obj):
         #potentialActions.append("PutObject")
         #if obj['moveable']:
         #    potentialActions.append("MoveHeldObject")
-    if (obj['moveable']):
-        potentialActions.append("PushObject")
+    #if (obj['moveable']):
+    #    potentialActions.append("PushObject")
     #if (obj['breakable']):
     #    potentialActions.append("BreakObject")
     if (obj['openable']):
         potentialActions.append("OpenObject")
         potentialActions.append("CloseObject")
-    if (obj['canBeUsedUp']):
-        potentialActions.append("UseUpObject")
-    if (obj['canFillWithLiquid']):
-        potentialActions.append("FillObjectWithLiquid")
+    #if (obj['canBeUsedUp']):
+    #    potentialActions.append("UseUpObject")
+    #if (obj['canFillWithLiquid']):
+    #    potentialActions.append("FillObjectWithLiquid")
     #if (obj['cookable']):
     #    potentialActions.append("CookObject")
     #if (obj['sliceable']):
     #    potentialActions.append("SliceObject")
-    if (obj['dirtyable']):
-        potentialActions.append("DirtyObject")
-        potentialActions.append("CleanObject")
+    #if (obj['dirtyable']):
+    #    potentialActions.append("DirtyObject")
+    #    potentialActions.append("CleanObject")
     if (obj['toggleable']):
         potentialActions.append("ToggleObjectOn")
         potentialActions.append("ToggleObjectOff")
@@ -72,46 +72,46 @@ GRIDSIZE = 0.25
 # Objects that show up in all kitchen scenes. We can do one-hot encoding for these
 OBJECT_TYPES = [
     "Apple",
-    "AppleSliced",
+    #"AppleSliced",
     "Bowl",
     "Bread",
-    "BreadSliced",
+    #"BreadSliced",
     "ButterKnife",
     "Cabinet",
     "CoffeeMachine",
-    "CounterTop",
+    #"CounterTop",
     "Cup",
-    "DishSponge",
+    #"DishSponge",
     "Egg",
-    "EggCracked",
+    #"EggCracked",
     "Faucet",
-    "Floor",
+    #"Floor",
     "Fork",
     "Fridge",
     "GarbageCan",
     "Knife",
-    "Lettuce",
-    "LettuceSliced",
+    #"Lettuce",
+    #"LettuceSliced",
     "LightSwitch",
-    "Microwave",
-    "Mug",
-    "Pan",
-    "PepperShaker",
-    "Plate",
-    "Pot",
+    #"Microwave",
+    #"Mug",
+    #"Pan",
+    #"PepperShaker",
+    #"Plate",
+    #"Pot",
     "Potato",
-    "PotatoSliced",
+    #"PotatoSliced",
     "SaltShaker",
     "Sink",
-    "SinkBasin",
-    "SoapBottle",
-    "Spatula",
-    "Spoon",
-    "StoveBurner",
-    "StoveKnob",
+    #"SinkBasin",
+    #"SoapBottle",
+    #"Spatula",
+    #"Spoon",
+    #"StoveBurner",
+    #"StoveKnob",
     "Toaster",
-    "Tomato",
-    "TomatoSliced",
+    #"Tomato",
+    #"TomatoSliced",
 ]
 
 MOVEMENT_ACTION_TYPES = [
@@ -125,25 +125,25 @@ MOVEMENT_ACTION_TYPES = [
 
 ACTION_TYPES = [
     "PickupObject",
-    "PutObject",
+    #"PutObject",
     "DropHandObject",
-    "MoveHeldObject",
-    "RotateHeldObject",
-    "PushObject",
-    "PullObject",
+    #"MoveHeldObject",
+    #"RotateHeldObject",
+    #"PushObject",
+    #"PullObject",
     "OpenObject",
     "CloseObject",
     #"BreakObject",
-    "CookObject",
+    #"CookObject",
     #"SliceObject",
     "ToggleObjectOn",
     "ToggleObjectOff",
-    "DirtyObject",
-    "CleanObject",
-    "UseUpObject",
-    "FillObjectWithLiquid",
-    "EmptyLiquidFromObject",
-    "UseUpObject"
+    #"DirtyObject",
+    #"CleanObject",
+    #"UseUpObject",
+    #"FillObjectWithLiquid",
+    #"EmptyLiquidFromObject",
+    #"UseUpObject"
 ]
 
 ALL_ACTIONS = MOVEMENT_ACTION_TYPES + ACTION_TYPES

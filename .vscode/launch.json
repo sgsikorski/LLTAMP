@@ -6,7 +6,7 @@
         "request": "launch",
         "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--train", "-gp", "src/env/goalTasks.json", "-enum", "2", "--epochs", "128"],
+        "args": ["--train", "-gp", "src/env/goalTasks.json", "-enum", "5", "--epochs", "2000"],
     },
     {
         "name": "Test",
@@ -14,7 +14,7 @@
         "request": "launch",
         "program": "src/main.py",
         "console": "integratedTerminal",
-        "args": ["--test", "-gp", "src/env/goalTasks.json", "-mp", "src/models/agent_3"],
+        "args": ["--test", "-gp", "src/env/goalTasks.json", "-mp", "src/models/agent", "-enum", "5"],
     },
     {
         "name": "Train and Test",

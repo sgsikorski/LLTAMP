@@ -13,20 +13,23 @@ import torch.nn.functional as F
 class DQN(nn.Module):
     def __init__(self, input_dim, n_actions):
         super(DQN, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 64, dtype=torch.float64)
-        self.fc2 = nn.Linear(64, 64, dtype=torch.float64)
-        self.fc3 = nn.Linear(64, n_actions, dtype=torch.float64)
+        self.fc1 = nn.Linear(input_dim, 64, dtype=torch.float)
+        self.fc2 = nn.Linear(64, 64, dtype=torch.float)
+        self.fc3 = nn.Linear(64, n_actions, dtype=torch.float)
     
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         return self.fc3(x)
+    
+    def Q(self, state_batch, action_batch): 
+        q_values = self(state_batch)
+        row_index = torch.arange(0, state_batch.shape[0])
+        selected_actions_q_values = q_values[row_index, action_batch]
+        return selected_actions_q_values
 
-    def Q(self, state, action):
-        return self.forward(state)[action]
-
-    def maxQ(self, state):
-        return torch.argmax(self.forward(state))
+    def maxQ(self, state_batch):
+        return torch.argmax(self(state_batch)).item()
 
     def reset(self):
         self.fc1.reset_parameters()

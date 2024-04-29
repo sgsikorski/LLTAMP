@@ -42,11 +42,7 @@ State: \u007b
         return hash((self.agentX, self.agentY, self.agentZ, tuple([obj["objectId"] for obj in self.visibleObjects])))
 
     def __eq__(self, other):
-        return (self.agentX == other.agentX 
-                and self.agentY == other.agentY 
-                and self.agentZ == other.agentZ 
-                and self.visibleObjects == other.visibleObjects
-                and self.reachableObjects == other.reachableObjects)
+        return np.array_equal(self.getOneHotEncoding(), other.getOneHotEncoding())
     
     def getManhattanDistance(self):
         return np.sqrt(self.agentX**2 + self.agentY**2 + self.agentZ**2)
@@ -88,7 +84,7 @@ State: \u007b
 
     # This is really not a one-hot encoding as we have floats in the agent's position and the distance of the object
     def getOneHotEncoding(self):
-        oneHot = np.zeros((len(utilConstants.OBJECT_TYPES), len(utilConstants.OBJECT_PROPERTIES)+1), dtype=float)
+        oneHot = np.zeros((len(utilConstants.OBJECT_TYPES), len(utilConstants.OBJECT_PROPERTIES)+1))
         # All objects and their reachable/visible status and action status
         for obj in self.visibleObjects:
             # If the object is not in the object types, we skip it
@@ -107,11 +103,11 @@ State: \u007b
     # TODO: Hierarchical reward to subtasks of main task
     def getReward(self, goal):
         if not self.envMD["lastActionSuccess"]:
-            return -10
+            return -1
         if goal['objectId'] in self.reachObjName:
-            return 5
+            return .5
         if goal['objectId'] in self.visObjName:
             idx = self.visObjName.index(goal['objectId'])
-            return 1 / self.visibleObjects[idx]['distance']
+            return .5 / self.visibleObjects[idx]['distance']
         return 0
         

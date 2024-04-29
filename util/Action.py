@@ -28,3 +28,13 @@ Action: \u007b
                 return "RotateLeft"
             case "RotateLeft":
                 return "RotateRight"
+            case "CloseObject":
+                return "OpenObject"
+            case "OpenObject":
+                return "CloseObject"
+            case "ToggleObjectOn":
+                return "ToggleObjectOff"
+            case "ToggleObjectOff":
+                return "ToggleObjectOn"
+            case _:
+                return self.actionType

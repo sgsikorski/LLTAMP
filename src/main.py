@@ -25,7 +25,7 @@ def main():
 
     controller = Controller(
         agentMode = "default",
-        visibilityDistance=2.5,
+        visibilityDistance=2,
         fieldOfView=105,
         scene="FloorPlan1",
         gridSize=uc.GRIDSIZE,
